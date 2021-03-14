@@ -103,7 +103,7 @@ namespace WPF_Test.PresentationLayer
             }
             if (!int.TryParse(AgeTextBox.Text, out int age))
             {
-                errorMessage += "Player Age is required and must be an integer.\n";
+                errorMessage += "Player Age is required and must be an \n integer.\n";
             }
             else
             {

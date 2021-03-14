@@ -1,4 +1,3 @@
-C:\Users\dougs\source\repos\WPF_Test\WPF_Test\obj\Debug\WPF_Test.csprojAssemblyReference.cache
 C:\Users\dougs\source\repos\WPF_Test\WPF_Test\obj\Debug\MainWindow.g.cs
 C:\Users\dougs\source\repos\WPF_Test\WPF_Test\obj\Debug\PresentationLayer\GameSessionView.g.cs
 C:\Users\dougs\source\repos\WPF_Test\WPF_Test\obj\Debug\PresentationLayer\PlayerSetupView.g.cs
