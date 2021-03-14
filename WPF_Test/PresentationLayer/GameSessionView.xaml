@@ -1,0 +1,317 @@
+﻿<Window x:Class="WPF_Test.PresentationLayer.GameSessionView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_Test.PresentationLayer"
+        mc:Ignorable="d"
+        Background="Black"
+        Width="900"
+        Height="600"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+        <LinearGradientBrush 
+            x:Key="GrayBlueGradientBrush" 
+            StartPoint="0,0" 
+            EndPoint="1,0"
+            Opacity="50">
+            <GradientStop Color="MidnightBlue" Offset="0"/>
+            <GradientStop Color="#CCCCFF" Offset="0.25" />
+            <GradientStop Color="#CCCCFF" Offset="0.75" />
+            <GradientStop Color="MidnightBlue" Offset="1" />
+        </LinearGradientBrush>
+        <Style x:Key="BorderStyle" TargetType="Border">
+            <Setter Property="BorderBrush" Value="PowderBlue"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="10"/>
+        </Style>
+        <Style x:Key="MainPanelLabelStyle" TargetType="Label">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Lucida Console"/>
+        </Style>
+        <Style x:Key="MainPanelButtonStyle" TargetType="Button">
+            <Setter Property="Margin" Value="10,0,10,0"/>
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Background" Value="Silver"/>
+            <Setter Property="Foreground" Value="MidnightBlue"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid 
+                            Width="{TemplateBinding Width}" 
+                            Height="{TemplateBinding Height}" 
+                            ClipToBounds="True">
+                            <Rectangle 
+                                x:Name="innerRectangle" 
+                                HorizontalAlignment="Stretch" 
+                                VerticalAlignment="Stretch" 
+                                Fill="{TemplateBinding Background}" 
+                                RadiusX="5" 
+                                RadiusY="5" />
+                            <!-- Present Content (text) of the button. -->
+                            <DockPanel Name="myContentPresenterDockPanel">
+                                <ContentPresenter 
+                                    x:Name="myContentPresenter" 
+                                    Margin="2" 
+                                    HorizontalAlignment="Center"
+                                    Content="{TemplateBinding  Content}" 
+                                    TextBlock.Foreground="Black" />
+                            </DockPanel>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="LightSteelBlue" />
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="MainPanelTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Foreground" Value="MidnightBlue"/>
+            <Setter Property="Width" Value="80"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Padding" Value="3,0,0,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Background" Value="WhiteSmoke"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border 
+                            Background="{TemplateBinding Background}"   
+                            x:Name="Bd" 
+                            BorderBrush="Black"  
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Border
+            Margin="10"
+            Style="{StaticResource BorderStyle}">
+            <Grid
+                Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="0,0,0,10"
+                    Style="{StaticResource BorderStyle}">
+                    <StackPanel
+                        Margin="10"
+                        Grid.Column="0"
+                        Orientation="Vertical">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Left">
+                            <TextBox Text="{Binding Player.Name}" Style="{StaticResource MainPanelTextBoxStyle}"/>
+                            <Label Content="Name" Style="{StaticResource MainPanelLabelStyle}"/>
+                        </StackPanel>
+                        <StackPanel
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Left">
+                            <TextBox Text="{Binding Player.Race}" Style="{StaticResource MainPanelTextBoxStyle}"/>
+                            <Label Content="Race" Style="{StaticResource MainPanelLabelStyle}"/>
+                        </StackPanel>
+                        <StackPanel
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Left">
+                            <TextBox Text="{Binding Player.Health}" Style="{StaticResource MainPanelTextBoxStyle}"/>
+                            <Label Content="Health" Style="{StaticResource MainPanelLabelStyle}"/>
+                        </StackPanel>
+                        <StackPanel
+                             Orientation="Horizontal"
+                             HorizontalAlignment="Left">
+                            <TextBox Text="{Binding Player.Lives}" Style="{StaticResource MainPanelTextBoxStyle}"/>
+                            <Label Content="Lives" Style="{StaticResource MainPanelLabelStyle}"/>
+                        </StackPanel>
+                        <StackPanel
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Left">
+                            <TextBox Text="{Binding Player.ExperiencePoints}" Style="{StaticResource MainPanelTextBoxStyle}"/>
+                            <Label Content="Experience" Style="{StaticResource MainPanelLabelStyle}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="10,0,10,10"
+                    Style="{StaticResource BorderStyle}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel
+                            Grid.Row="0" 
+                            Orientation="Vertical">
+                            <StackPanel
+                                    Orientation="Vertical"
+                                    HorizontalAlignment="Center"
+                                    Margin="0">
+                                
+                                
+                                
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel
+                            Grid.Row="1" 
+                            Orientation="Vertical">
+                            
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Margin="0,0,0,10"
+                    Style="{StaticResource BorderStyle}">
+                    <StackPanel>
+                        <!--L,T,R,B -->
+                        <Border
+                            Grid.Column="1"
+                            Margin="0, 5, 0, 0"
+                            Height="175"
+                            Width="190"
+                            Padding="0"
+                            Background="DarkSlateGray"
+                            Style="{StaticResource BorderStyle}">
+                            <TextBox
+                                        Height="100"
+                                        Width="100"
+                                        Margin="10"
+                                        Background="DarkSlateGray"
+                                        BorderThickness="0"
+                                        TextWrapping="Wrap"
+                                        Text="{Binding CurrentLocation.Description, Mode=OneWay}"
+                                        VerticalScrollBarVisibility="Auto"
+                                        VerticalContentAlignment="top"
+                                        Style="{StaticResource MainPanelTextBoxStyle}"/>
+                        </Border>
+                        <Label 
+                                        Content="Current Location" 
+                                        HorizontalAlignment="Center"
+                                        Style="{StaticResource MainPanelLabelStyle}"/>
+                        <TextBox
+                                    Width="190"
+                                    Margin="0,0,0,5"
+                                    Text="{Binding CurrentLocation.Name, Mode=OneWay}" 
+                                    Style="{StaticResource MainPanelTextBoxStyle}"
+                                    HorizontalContentAlignment="Center"
+                                    Background="WhiteSmoke" />
+                        <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button
+                                     Grid.Row="0"
+                                     Grid.Column="1"
+                                     Content="North" 
+                                     Style="{StaticResource MainPanelButtonStyle}"
+                                     Visibility="{Binding HasNorthLocation, Converter={StaticResource BooleanToVisibility}}"
+                                     Click="NorthTravelButton_Click"/>
+                        <Button 
+                                     Grid.Row="1"
+                                     Grid.Column="0"
+                                     Content="West" 
+                                     Style="{StaticResource MainPanelButtonStyle}"
+                                     Visibility="{Binding HasWestLocation, Converter={StaticResource BooleanToVisibility}}"
+                                     Click="WestTravelButton_Click"/>
+                        <Button 
+                                     Grid.Row="1"
+                                     Grid.Column="2"
+                                     Content="East" 
+                                     Style="{StaticResource MainPanelButtonStyle}"
+                                     Visibility="{Binding HasEastLocation, Converter={StaticResource BooleanToVisibility}}"
+                                     Click="EastTravelButton_Click"/>
+                        <Button
+                                     Grid.Row="2"
+                                     Grid.Column="1"
+                                     Content="South" 
+                                     Style="{StaticResource MainPanelButtonStyle}"
+                                     Visibility="{Binding HasSouthLocation, Converter={StaticResource BooleanToVisibility}}"
+                                     Click="SouthTravelButton_Click"/>
+                    </Grid>
+                        <Label 
+                                        Content="{Binding MissionTimeDisplay}" 
+                                        HorizontalAlignment="Center"
+                                        Style="{StaticResource MainPanelLabelStyle}"/>
+                    </StackPanel>
+                </Border>
+                <Border
+                    Grid.Row="1"
+                    Grid.ColumnSpan="3"
+                    Style="{StaticResource BorderStyle}">
+                    <Grid
+                        Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel
+                            Grid.Column="0">
+                            <Button
+                                Content="Quit"
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource MainPanelButtonStyle}" Click="Button_Click">
+                                
+                            </Button>
+                        </StackPanel>
+                        <Border
+                            Grid.Column="1"
+                            Margin="0"
+                            Padding="0"
+                            Background="WhiteSmoke"
+                            Style="{StaticResource BorderStyle}">
+                            <TextBox
+                                Height="auto"
+                                Width="auto"
+                                Margin="10"
+                                Background="WhiteSmoke"
+                                BorderThickness="0"
+                                TextWrapping="Wrap"
+                                Text="{Binding MessageDisplay, Mode=OneWay}"
+                                VerticalScrollBarVisibility="Auto"
+                                VerticalContentAlignment="top"
+                                Style="{StaticResource MainPanelTextBoxStyle}"/>
+                        </Border>
+                        <StackPanel
+                            Grid.Column="2"
+                            Orientation="Vertical">
+                            
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
