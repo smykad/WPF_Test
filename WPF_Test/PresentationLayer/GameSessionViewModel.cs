@@ -166,6 +166,7 @@ namespace WPF_Test.PresentationLayer
         {
             var backgroundMusic = new SoundPlayer("PresentationLayer/Resources/background.wav");
             backgroundMusic.Load();
+            
             backgroundMusic.PlayLooping();
         }
         /// <summary>
@@ -392,7 +393,7 @@ namespace WPF_Test.PresentationLayer
         void OnGameTimerTick(object sender, EventArgs e)
         {
             _gameTime = DateTime.Now - _gameStartTime;
-            MissionTimeDisplay = "Time Played" + _gameTime.ToString(@"hh\:mm\:ss");
+            MissionTimeDisplay = "Time Played " + _gameTime.ToString(@"hh\:mm\:ss");
         }
 
         /// <summary>

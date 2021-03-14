@@ -5,11 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_Test.PresentationLayer"
         mc:Ignorable="d"
-        Background="Black"
         Width="900"
         Height="600"
         WindowStartupLocation="CenterScreen"
         WindowStyle="SingleBorderWindow">
+    <Window.Background>
+        <ImageBrush ImageSource="Resources\background.png"/>
+    </Window.Background>
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
         <LinearGradientBrush 
@@ -28,15 +30,14 @@
             <Setter Property="CornerRadius" Value="10"/>
         </Style>
         <Style x:Key="MainPanelLabelStyle" TargetType="Label">
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="PowderBlue"/>
             <Setter Property="FontFamily" Value="Lucida Console"/>
         </Style>
         <Style x:Key="MainPanelButtonStyle" TargetType="Button">
             <Setter Property="Margin" Value="10,0,10,0"/>
             <Setter Property="Width" Value="50"/>
             <Setter Property="Height" Value="20"/>
-            <Setter Property="Background" Value="Silver"/>
-            <Setter Property="Foreground" Value="MidnightBlue"/>
+            <Setter Property="Background" Value="DarkSeaGreen"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -58,7 +59,7 @@
                                     Margin="2" 
                                     HorizontalAlignment="Center"
                                     Content="{TemplateBinding  Content}" 
-                                    TextBlock.Foreground="Black" />
+                                    TextBlock.Foreground="DarkSlateGray" />
                             </DockPanel>
                         </Grid>
                     </ControlTemplate>
@@ -75,12 +76,12 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="MainPanelTextBoxStyle" TargetType="TextBox">
-            <Setter Property="Foreground" Value="MidnightBlue"/>
+            <Setter Property="Background" Value="DarkSeaGreen"/>
+            <Setter Property="Foreground" Value="DarkSlateGray"/>
             <Setter Property="Width" Value="80"/>
             <Setter Property="Height" Value="20"/>
             <Setter Property="Padding" Value="3,0,0,0"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Background" Value="WhiteSmoke"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
@@ -158,29 +159,10 @@
                     Grid.Column="1"
                     Margin="10,0,10,10"
                     Style="{StaticResource BorderStyle}">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="2*"/>
-                            <RowDefinition Height="1*"/>
-                        </Grid.RowDefinitions>
-                        <StackPanel
-                            Grid.Row="0" 
-                            Orientation="Vertical">
-                            <StackPanel
-                                    Orientation="Vertical"
-                                    HorizontalAlignment="Center"
-                                    Margin="0">
-                                
-                                
-                                
-                            </StackPanel>
-                        </StackPanel>
-                        <StackPanel
-                            Grid.Row="1" 
-                            Orientation="Vertical">
-                            
-                        </StackPanel>
-                    </Grid>
+                    <Label Content="Placeholder for NPC interface"
+                           Foreground="PowderBlue"
+                           HorizontalContentAlignment="Center"
+                           VerticalContentAlignment="Center"/>
                 </Border>
                 <Border
                     Grid.Row="0"
@@ -195,31 +177,32 @@
                             Height="175"
                             Width="190"
                             Padding="0"
-                            Background="DarkSlateGray"
+                            Background="DarkSeaGreen"
+                            BorderThickness="3"
                             Style="{StaticResource BorderStyle}">
                             <TextBox
-                                        Height="100"
-                                        Width="100"
-                                        Margin="10"
-                                        Background="DarkSlateGray"
-                                        BorderThickness="0"
-                                        TextWrapping="Wrap"
-                                        Text="{Binding CurrentLocation.Description, Mode=OneWay}"
-                                        VerticalScrollBarVisibility="Auto"
-                                        VerticalContentAlignment="top"
-                                        Style="{StaticResource MainPanelTextBoxStyle}"/>
+                                Height="100"
+                                Width="100"
+                                Margin="10"
+                                Background="DarkSeaGreen"
+                                BorderThickness="0"
+                                TextWrapping="Wrap"
+                                Text="{Binding CurrentLocation.Description, Mode=OneWay}"
+                                VerticalScrollBarVisibility="Auto"
+                                VerticalContentAlignment="top"
+                                Style="{StaticResource MainPanelTextBoxStyle}"/>
                         </Border>
-                        <Label 
-                                        Content="Current Location" 
-                                        HorizontalAlignment="Center"
-                                        Style="{StaticResource MainPanelLabelStyle}"/>
+                        <Label
+                            Content="Current Location"
+                            HorizontalAlignment="Center"
+                            Foreground="PowderBlue"
+                            Style="{StaticResource MainPanelLabelStyle}"/>
                         <TextBox
-                                    Width="190"
-                                    Margin="0,0,0,5"
-                                    Text="{Binding CurrentLocation.Name, Mode=OneWay}" 
-                                    Style="{StaticResource MainPanelTextBoxStyle}"
-                                    HorizontalContentAlignment="Center"
-                                    Background="WhiteSmoke" />
+                            Width="190"
+                            Margin="0,0,0,5"
+                            Text="{Binding CurrentLocation.Name, Mode=OneWay}"
+                            Style="{StaticResource MainPanelTextBoxStyle}"
+                            HorizontalContentAlignment="Center"/>
                         <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"/>
@@ -232,38 +215,35 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Button
-                                     Grid.Row="0"
-                                     Grid.Column="1"
-                                     Content="North" 
-                                     Style="{StaticResource MainPanelButtonStyle}"
-                                     Visibility="{Binding HasNorthLocation, Converter={StaticResource BooleanToVisibility}}"
-                                     Click="NorthTravelButton_Click"/>
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Content="North" 
+                            Style="{StaticResource MainPanelButtonStyle}"
+                            Visibility="{Binding HasNorthLocation, Converter={StaticResource BooleanToVisibility}}"
+                            Click="NorthTravelButton_Click"/>
+                       
                         <Button 
-                                     Grid.Row="1"
-                                     Grid.Column="0"
-                                     Content="West" 
-                                     Style="{StaticResource MainPanelButtonStyle}"
-                                     Visibility="{Binding HasWestLocation, Converter={StaticResource BooleanToVisibility}}"
-                                     Click="WestTravelButton_Click"/>
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Content="West" 
+                            Style="{StaticResource MainPanelButtonStyle}"
+                            Visibility="{Binding HasWestLocation, Converter={StaticResource BooleanToVisibility}}"
+                            Click="WestTravelButton_Click"/>
                         <Button 
-                                     Grid.Row="1"
-                                     Grid.Column="2"
-                                     Content="East" 
-                                     Style="{StaticResource MainPanelButtonStyle}"
-                                     Visibility="{Binding HasEastLocation, Converter={StaticResource BooleanToVisibility}}"
-                                     Click="EastTravelButton_Click"/>
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            Content="East" 
+                            Style="{StaticResource MainPanelButtonStyle}"
+                            Visibility="{Binding HasEastLocation, Converter={StaticResource BooleanToVisibility}}"
+                            Click="EastTravelButton_Click"/>
                         <Button
-                                     Grid.Row="2"
-                                     Grid.Column="1"
-                                     Content="South" 
-                                     Style="{StaticResource MainPanelButtonStyle}"
-                                     Visibility="{Binding HasSouthLocation, Converter={StaticResource BooleanToVisibility}}"
-                                     Click="SouthTravelButton_Click"/>
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Content="South" 
+                            Style="{StaticResource MainPanelButtonStyle}"
+                            Visibility="{Binding HasSouthLocation, Converter={StaticResource BooleanToVisibility}}"
+                            Click="SouthTravelButton_Click"/>
                     </Grid>
-                        <Label 
-                                        Content="{Binding MissionTimeDisplay}" 
-                                        HorizontalAlignment="Center"
-                                        Style="{StaticResource MainPanelLabelStyle}"/>
                     </StackPanel>
                 </Border>
                 <Border
@@ -282,21 +262,21 @@
                             <Button
                                 Content="Quit"
                                 HorizontalAlignment="Left"
-                                Style="{StaticResource MainPanelButtonStyle}" Click="Button_Click">
-                                
-                            </Button>
+                                Style="{StaticResource MainPanelButtonStyle}"
+                                Click="Button_Click"/>
                         </StackPanel>
+
                         <Border
                             Grid.Column="1"
                             Margin="0"
                             Padding="0"
-                            Background="WhiteSmoke"
+                            BorderThickness="10px"
+                            Background="DarkSeaGreen"
                             Style="{StaticResource BorderStyle}">
                             <TextBox
                                 Height="auto"
                                 Width="auto"
                                 Margin="10"
-                                Background="WhiteSmoke"
                                 BorderThickness="0"
                                 TextWrapping="Wrap"
                                 Text="{Binding MessageDisplay, Mode=OneWay}"
@@ -307,7 +287,10 @@
                         <StackPanel
                             Grid.Column="2"
                             Orientation="Vertical">
-                            
+                            <Label
+                                Content="{Binding MissionTimeDisplay}"
+                                HorizontalAlignment="Center"
+                                Style="{StaticResource MainPanelLabelStyle}"/>
                         </StackPanel>
                     </Grid>
                 </Border>

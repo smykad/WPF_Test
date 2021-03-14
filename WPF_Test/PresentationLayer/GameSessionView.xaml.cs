@@ -59,5 +59,6 @@ namespace WPF_Test.PresentationLayer
         {
             this.Close();
         }
+
     }
 }

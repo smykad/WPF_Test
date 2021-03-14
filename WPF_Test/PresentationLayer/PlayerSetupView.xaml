@@ -5,10 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_Test.PresentationLayer"
         mc:Ignorable="d"
-        Background="Black"
         Width="400"
         Height="400"
-        WindowStyle="SingleBorderWindow">
+        WindowStyle="SingleBorderWindow"
+        WindowStartupLocation="CenterScreen">
+    <Window.Background>
+        <ImageBrush ImageSource="Resources\background.png"/>
+    </Window.Background>
     <Window.Resources>
         <Style x:Key="BorderStyle" TargetType="Border">
             <Setter Property="BorderBrush" Value="PowderBlue"/>
@@ -16,15 +19,14 @@
             <Setter Property="CornerRadius" Value="10"/>
         </Style>
         <Style x:Key="MainPanelLabelStyle" TargetType="Label">
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="PowderBlue"/>
             <Setter Property="FontFamily" Value="Lucida Console"/>
         </Style>
         <Style x:Key="MainPanelButtonStyle" TargetType="Button">
             <Setter Property="Margin" Value="10,0,10,0"/>
             <Setter Property="Width" Value="75"/>
             <Setter Property="Height" Value="20"/>
-            <Setter Property="Background" Value="Silver"/>
-            <Setter Property="Foreground" Value="MidnightBlue"/>
+            <Setter Property="Background" Value="DarkSeaGreen"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -46,7 +48,7 @@
                                     Margin="2" 
                                     HorizontalAlignment="Center"
                                     Content="{TemplateBinding  Content}" 
-                                    TextBlock.Foreground="Black" />
+                                    TextBlock.Foreground="DarkSlateGray" />
                             </DockPanel>
                         </Grid>
                     </ControlTemplate>
@@ -63,7 +65,7 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="MainPanelTextBoxStyle" TargetType="TextBox">
-            <Setter Property="Foreground" Value="MidnightBlue"/>
+            <Setter Property="Foreground" Value="DarkSlateGray"/>
             <Setter Property="Width" Value="100"/>
             <Setter Property="Height" Value="20"/>
             <Setter Property="Padding" Value="3,0,0,0"/>
@@ -85,7 +87,8 @@
             </Setter>
         </Style>
         <Style x:Key="MainPanelComboBoxStyle" TargetType="ComboBox">
-            <Setter Property="Background" Value="WhiteSmoke"/>
+            <Setter Property="Background" Value="DarkSeaGreen"/>
+            <Setter Property="Foreground" Value="DarkSlateGray"/>
             <Setter Property="Width" Value="100"/>
         </Style>
     </Window.Resources>
@@ -104,28 +107,33 @@
                     Margin="20"
                     FontSize="20"
                     Style="{StaticResource MainPanelLabelStyle}"/>
+                <!--L,T,R,B -->
                 <StackPanel
-                Orientation="Horizontal"
-                HorizontalAlignment="Right">
+                    Margin="0, 0, 50, 5"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
                     <Label Content="Name" Style="{StaticResource MainPanelLabelStyle}"/>
                     <TextBox Name="NameTextBox" Style="{StaticResource MainPanelTextBoxStyle}"/>
                 </StackPanel>
                 <StackPanel
-                Orientation="Horizontal"
-                HorizontalAlignment="Right">
+                    Margin="0, 0, 50, 5"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
                     <Label Content="Race" Style="{StaticResource MainPanelLabelStyle}"/>
                     <ComboBox 
-                    Name="RaceComboBox"
-                    SelectedIndex="0"
-                    Style="{StaticResource MainPanelComboBoxStyle}"/>
+                        Name="RaceComboBox"
+                        SelectedIndex="0"
+                        Style="{StaticResource MainPanelComboBoxStyle}"/>
                 </StackPanel>
                 <StackPanel
+                    Margin="0, 0, 50, 5"
                 Orientation="Horizontal"
                 HorizontalAlignment="Right">
                     <Label Content="Age" Style="{StaticResource MainPanelLabelStyle}"/>
                     <TextBox Name="AgeTextBox" Style="{StaticResource MainPanelTextBoxStyle}"/>
                 </StackPanel>
                 <StackPanel
+                    Margin="0, 0, 50, 5"
                 Orientation="Horizontal"
                 HorizontalAlignment="Right">
                     <Label Content="Role" Style="{StaticResource MainPanelLabelStyle}"/>
@@ -142,7 +150,6 @@
                     Click="OkButton_Click"/>
                 <TextBlock                    
                     Name="ErrorMessageTextBlock"
-                    Background="Black"
                     Foreground="Red"/>
             </StackPanel>
 
