@@ -18,3 +18,4 @@ C:\Users\dougs\source\repos\WPF_Test\WPF_Test\obj\Debug\WPF_Test.exe
 C:\Users\dougs\source\repos\WPF_Test\WPF_Test\obj\Debug\WPF_Test.pdb
 C:\Users\dougs\source\repos\WPF_Test\WPF_Test\obj\Debug\WPF_Test_Content.g.cs
 C:\Users\dougs\source\repos\WPF_Test\WPF_Test\bin\Debug\PresentationLayer\Resources\background.wav
+C:\Users\dougs\source\repos\WPF_Test\WPF_Test\obj\Debug\WPF_Test.csprojAssemblyReference.cache

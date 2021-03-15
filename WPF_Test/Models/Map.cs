@@ -34,6 +34,7 @@ namespace WPF_Test.Models
         {
             get { return _mapLocations[_currentLocationCoordinates.Row, _currentLocationCoordinates.Column]; }
         }
+        public List<GameItem> StandardGameItems { get; set; }
 
         #endregion
 

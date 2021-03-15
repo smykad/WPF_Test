@@ -159,10 +159,11 @@
                     Grid.Column="1"
                     Margin="10,0,10,10"
                     Style="{StaticResource BorderStyle}">
-                    <Label Content="Placeholder for NPC interface"
+                    <Label Content="NPC/Item Interface PlaceHolder"
                            Foreground="PowderBlue"
                            HorizontalContentAlignment="Center"
                            VerticalContentAlignment="Center"/>
+                    
                 </Border>
                 <Border
                     Grid.Row="0"

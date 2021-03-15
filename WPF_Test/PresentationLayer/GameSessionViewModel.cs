@@ -134,6 +134,7 @@ namespace WPF_Test.PresentationLayer
             }
         }
 
+        public GameItemQuantity CurrentGameItem { get; set; }
         #endregion
 
         #region CONSTRUCTORS

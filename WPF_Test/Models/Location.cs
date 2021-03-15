@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -83,13 +84,16 @@ namespace WPF_Test.Models
             get { return _message; }
             set { _message = value; }
         }
-
+        public ObservableCollection<GameItemQuantity> GameItems { get; set; }
         #endregion
 
 
         #region CONSTRUCTORS
 
-
+        public Location()
+        {
+            GameItems = new ObservableCollection<GameItemQuantity>();
+        }
 
         #endregion
 

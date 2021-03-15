@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,6 +39,12 @@ namespace WPF_Test.DataLayer
             return new GameMapCoordinates() { Row = 2, Column = 0 };
         }
 
+        #region GameMap
+
+        public static GameItem GameItemByID(int id)
+        {
+            return StandardGameItems().FirstOrDefault(i => i.Id == id);
+        }
         public static Map GameMap()
         {
             int rows = 3;
@@ -45,6 +52,7 @@ namespace WPF_Test.DataLayer
 
             Map gameMap = new Map(rows, columns);
 
+            gameMap.StandardGameItems = StandardGameItems();
             //
             // row 1
             //
@@ -56,7 +64,12 @@ namespace WPF_Test.DataLayer
                 Accessible = true,
                 ModifiyExperiencePoints = 10,
                 Message = "Welcome to my Dungeon, you have been tasked with defeating a monster at the end of this dungeon.  " +
-                "Choose a weapon of your choice (Room 1)"
+                "Choose a weapon of your choice (Room 1)",
+                GameItems = new ObservableCollection<GameItemQuantity>
+                {
+                    new GameItemQuantity(GameItemByID(101), 1)
+
+                }
             };
             gameMap.MapLocations[2, 1] = new Location()
             {
@@ -135,5 +148,24 @@ namespace WPF_Test.DataLayer
 
             return gameMap;
         }
+        #endregion
+
+        #region Game Items
+
+        public static List<GameItem> StandardGameItems()
+        {
+            return new List<GameItem>()
+            {
+                new Potion(101, "Health Potion", 50, 0, 0, "Health Potion restores 50 HP", "You restored 50 HP"),
+                new Potion(103, "Bonus Life Potion", 0, 1, 0, "Bonus Life potion grants 1 life", "You gained a life!"),
+                new Potion(104, "XP Potion", 0, 0, 100, "Bonus XP potion grants 100 xp", "You gained 100 xp"),
+
+                new Armor(201, "Dark Iron Armor", Armor.ArmorType.Plate, 0, 20, "This armor emanates with the power of Dark Iron", "You have gained 20 xp"),
+                new Armor(202, "Dark Elf Armor", Armor.ArmorType.Leather, 0, 20, "This armor emanates with the power of Dark Elves", "You have gained 20 xp"),
+                new Armor(203, "Arcane Armor", Armor.ArmorType.Cloth, 0, 20, "This armor emanates with the power of the Arcane", "You have gained 20 xp")
+
+            };
+        }
+        #endregion
     }
 }
