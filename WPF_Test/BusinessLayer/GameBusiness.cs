@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WPF_Test.PresentationLayer;
 using WPF_Test.DataLayer;
 using WPF_Test.Models;
+using System.Collections.ObjectModel;
 
 namespace WPF_Test.BusinessLayer
 {
@@ -36,6 +37,10 @@ namespace WPF_Test.BusinessLayer
                 _player.ExperiencePoints = 0;
                 _player.Health = 100;
                 _player.Lives = 3;
+                _player.Inventory = new ObservableCollection<GameItemQuantity>()
+                {
+                    new GameItemQuantity(GameData.GameItemByID(101), 1)
+                };
             }
             else
             {

@@ -70,7 +70,7 @@ namespace WPF_Test.PresentationLayer
 
         private void PutDownButton_Click(object sender, RoutedEventArgs e)
         {
-            if(InventoryDataGrid.SelectedItem != null)
+            if(PlayerInfoTab.SelectedItem != null)
             {
                 _gameSessionViewModel.RemoveItemFromInventory();
             }
@@ -78,7 +78,7 @@ namespace WPF_Test.PresentationLayer
 
         private void UseButton_Click(object sender, RoutedEventArgs e)
         {
-            if(InventoryDataGrid.SelectedItem != null)
+            if(PlayerInfoTab.SelectedItem != null)
             {
                 _gameSessionViewModel.OnUseGameItem();
             }

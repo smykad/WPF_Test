@@ -146,15 +146,8 @@ namespace WPF_Test.Models
             Armor.Clear();
             foreach (var gameItemQuantity in Inventory)
             {
-                switch (gameItemQuantity.GameItem)
-                {
-                    case Potion _:
-                        Potions.Add(gameItemQuantity);
-                        break;
-                    case Armor _:
-                        Armor.Add(gameItemQuantity);
-                        break;
-                }
+                if (gameItemQuantity.GameItem is Potion) Potions.Add(gameItemQuantity);
+                if (gameItemQuantity.GameItem is Armor) Armor.Add(gameItemQuantity);
             }
         }
 

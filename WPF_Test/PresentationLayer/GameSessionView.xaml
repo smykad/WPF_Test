@@ -343,7 +343,7 @@
                                 HorizontalAlignment="Center"
                                 Margin="10">
                                 <Button
-                                    Content="Put Down"
+                                    Content="Drop"
                                     Style="{StaticResource MainPanelButtonStyle}"
                                     Click="PutDownButton_Click"/>
                                 <Button
@@ -351,26 +351,75 @@
                                     Style="{StaticResource MainPanelButtonStyle}"
                                     Click="UseButton_Click"/>
                             </StackPanel>
-                            <DataGrid
-                                x:Name="InventoryDataGrid"
-                                ItemsSource="{Binding Player.Inventory}"
-                                SelectedItem="{Binding CurrentGameItem}"
-                                Height="100"
+                            <TabControl
                                 Margin="5"
-                                Background="DarkSeaGreen"
-                                AutoGenerateColumns="False"
-                                HeadersVisibility="Column">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Name"
-                                                        Binding="{Binding GameItem.Name, Mode=OneWay}"
-                                                        Width="*"
-                                                        IsReadOnly="True"/>
-                                    <DataGridTextColumn Header="Value"
-                                                        Binding="{Binding GameItem.Value, Mode=OneWay}"
-                                                        Width="Auto"
-                                                        IsReadOnly="True"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
+                                x:Name="PlayerInfoTab"
+                                Background="DarkSlateGray">
+                                <TabItem 
+                                    x:Name="PlayerPotions"
+                                    Header="Potions">
+                                    <DataGrid
+                                        x:Name="PotionsData"
+                                        AutoGenerateColumns="False"
+                                        HeadersVisibility="Column"
+                                        Height="80"
+                                        Background="DarkSeaGreen"
+                                        
+                                        ItemsSource="{Binding Player.Potions}"
+                                        SelectedItem="{Binding CurrentGameItem}">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn
+                                                Width="Auto"
+                                                Binding="{Binding GameItem.Name, Mode=OneWay}"
+                                                Header="Name"
+                                                IsReadOnly="True"/>
+                                            <DataGridTextColumn
+                                                Width="*"
+                                                Binding="{Binding GameItem.Value, Mode=OneWay}"
+                                                Header="Value"
+                                                IsReadOnly="True" />
+                                            <DataGridTextColumn
+                                                Width="1.2*"
+                                                Binding="{Binding Quantity, Mode=OneWay}"
+                                                Header="QTY"
+                                                IsReadOnly="True" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </TabItem>
+                                <TabItem 
+                                    x:Name="PlayerArmor"
+                                    Header="Armor">
+                                    <DataGrid
+                                        x:Name="ArmorData"
+                                        AutoGenerateColumns="False"
+                                        HeadersVisibility="Column"
+                                        Background="DarkSeaGreen"
+                                        Height="80"
+                                        
+                                        ItemsSource="{Binding Player.Armor}"
+                                        SelectedItem="{Binding CurrentGameItem}">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn
+                                                Width="2*"
+                                                Binding="{Binding GameItem.Name, Mode=OneWay}"
+                                                Header="Name"
+                                                IsReadOnly="True"/>
+                                            <DataGridTextColumn
+                                                Width="*"
+                                                Binding="{Binding GameItem.Value, Mode=OneWay}"
+                                                Header="Value"
+                                                IsReadOnly="True" />
+                                            <DataGridTextColumn
+                                                Width=".75*"
+                                                Binding="{Binding Quantity, Mode=OneWay}"
+                                                Header="QTY"
+                                                IsReadOnly="True" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </TabItem>
+                            </TabControl>
+                                
+                           
                             
                         </StackPanel>
                     </Grid>

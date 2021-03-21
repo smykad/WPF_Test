@@ -71,7 +71,7 @@ namespace WPF_Test.DataLayer
                 "Choose a weapon of your choice (Room 1)",
                 GameItems = new ObservableCollection<GameItemQuantity>
                 {
-                    new GameItemQuantity(GameItemByID(101), 1)
+                    new GameItemQuantity(GameItemByID(101), 2)
                 }
             };
             gameMap.MapLocations[2, 1] = new Location()

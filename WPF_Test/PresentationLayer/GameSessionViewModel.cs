@@ -22,6 +22,19 @@ namespace WPF_Test.PresentationLayer
         private DateTime _gameStartTime;
         private string _gameTimeDisplay;
         private TimeSpan _gameTime;
+        private GameItemQuantity _currentGameItem;
+
+        public GameItemQuantity CurrentGameItem
+        {
+            get { return _currentGameItem; }
+            set 
+            { 
+                _currentGameItem = value;
+                OnPropertyChanged(nameof(CurrentGameItem));
+            }
+        }
+
+
         private string _currentMessage;
 
         public string CurrentMessage
@@ -144,7 +157,7 @@ namespace WPF_Test.PresentationLayer
             }
         }
 
-        public GameItemQuantity CurrentGameItem { get; set; }
+ 
         #endregion
 
         #region CONSTRUCTORS
