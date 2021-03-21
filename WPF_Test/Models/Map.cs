@@ -198,6 +198,24 @@ namespace WPF_Test.Models
             return westLocation;
         }
 
+        public string OpenLocationsByItem(int itemId)
+        {
+            var message = "The Item did nothing.";
+
+            for (var row = 0; row < _maxRows; row++)
+            {
+                for (var column = 0; column < _maxColumns; column++)
+                {
+                    var mapLocation = MapLocations[row, column];
+
+                    if (mapLocation == null || mapLocation.RequiredItem != itemId) continue;
+                    mapLocation.Accessible = true;
+                    message = $"{mapLocation.Name} is now accessible.";
+                }
+            }
+            return message;
+        }
+
         #endregion
     }
 }

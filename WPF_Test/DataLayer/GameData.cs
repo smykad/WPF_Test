@@ -22,7 +22,11 @@ namespace WPF_Test.DataLayer
                 Health = 100,
                 Lives = 3,
                 ExperiencePoints = 10,
-                LocationId = 0
+                LocationId = 0,
+                Inventory = new ObservableCollection<GameItemQuantity>()
+                {
+                    new GameItemQuantity(GameItemByID(101), 1)
+                }
             };
         }
 
@@ -68,7 +72,6 @@ namespace WPF_Test.DataLayer
                 GameItems = new ObservableCollection<GameItemQuantity>
                 {
                     new GameItemQuantity(GameItemByID(101), 1)
-
                 }
             };
             gameMap.MapLocations[2, 1] = new Location()
@@ -99,6 +102,10 @@ namespace WPF_Test.DataLayer
                 Name = "2-1",
                 Description = "This is a mini boss",
                 Accessible = true,
+                GameItems = new ObservableCollection<GameItemQuantity>
+                {
+                    new GameItemQuantity(GameItemByID(201), 1)
+                },
                 Message = "Welcome to the mini boss (room 6)"
             };
 
@@ -142,7 +149,8 @@ namespace WPF_Test.DataLayer
                 Id = 9,
                 Name = "3-3",
                 Description = "Final Boss Room",
-                Accessible = true,
+                RequiredItem = 201,
+                Accessible = false,
                 Message = "Welcome to the Boss (room 9)"
             };
 
@@ -156,13 +164,13 @@ namespace WPF_Test.DataLayer
         {
             return new List<GameItem>()
             {
-                new Potion(101, "Health Potion", 50, 0, 0, "Health Potion restores 50 HP", "You restored 50 HP"),
-                new Potion(103, "Bonus Life Potion", 0, 1, 0, "Bonus Life potion grants 1 life", "You gained a life!"),
-                new Potion(104, "XP Potion", 0, 0, 100, "Bonus XP potion grants 100 xp", "You gained 100 xp"),
+                new Potion(101, "Health Potion", 100, 50, 0, 0, "Health Potion restores 50 HP", "You restored 50 HP"),
+                new Potion(103, "Bonus Life Potion", 150, 0, 1, 0, "Bonus Life potion grants 1 life", "You gained a life!"),
+                new Potion(104, "XP Potion", 100, 0, 0, 100, "Bonus XP potion grants 100 xp", "You gained 100 xp"),
 
-                new Armor(201, "Dark Iron Armor", Armor.ArmorType.Plate, 0, 20, "This armor emanates with the power of Dark Iron", "You have gained 20 xp"),
-                new Armor(202, "Dark Elf Armor", Armor.ArmorType.Leather, 0, 20, "This armor emanates with the power of Dark Elves", "You have gained 20 xp"),
-                new Armor(203, "Arcane Armor", Armor.ArmorType.Cloth, 0, 20, "This armor emanates with the power of the Arcane", "You have gained 20 xp")
+                new Armor(201, "Dark Iron Armor", 20,  500, Armor.ArmorType.Plate, 0, "This armor emanates with the power of Dark Iron", "You have gained 20 xp"),
+                new Armor(202, "Dark Elf Armor", 20, 500, Armor.ArmorType.Leather, 0,"This armor emanates with the power of Dark Elves", "You have gained 20 xp"),
+                new Armor(203, "Arcane Armor", 20, 500, Armor.ArmorType.Cloth, 0, "This armor emanates with the power of the Arcane", "You have gained 20 xp")
 
             };
         }

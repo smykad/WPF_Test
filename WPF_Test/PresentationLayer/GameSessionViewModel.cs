@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using WPF_Test.Models;
 using System.Windows.Threading;
 using System.Media;
+using static System.Net.Mime.MediaTypeNames;
+using System.Windows;
 
 namespace WPF_Test.PresentationLayer
 {
@@ -20,6 +22,14 @@ namespace WPF_Test.PresentationLayer
         private DateTime _gameStartTime;
         private string _gameTimeDisplay;
         private TimeSpan _gameTime;
+        private string _currentMessage;
+
+        public string CurrentMessage
+        {
+            get { return _currentMessage; }
+            set { _currentMessage = value; }
+        }
+
 
         private Player _player;
 
@@ -167,7 +177,6 @@ namespace WPF_Test.PresentationLayer
         {
             var backgroundMusic = new SoundPlayer("PresentationLayer/Resources/background.wav");
             backgroundMusic.Load();
-            
             backgroundMusic.PlayLooping();
         }
         /// <summary>
@@ -404,6 +413,97 @@ namespace WPF_Test.PresentationLayer
         {
             _gameStartTime = DateTime.Now;
             UpdateAvailableTravelPoints();
+            Player.UpdateInventory();
+            Player.CalculateWealth();
+        }
+
+        public void AddItemToInventory()
+        {
+            if (CurrentGameItem == null || !_currentLocation.GameItems.Contains(CurrentGameItem)) return;
+            var selectedGameItemQuantity = CurrentGameItem;
+
+            _currentLocation.RemoveGameItemQuantityFromLocation(selectedGameItemQuantity, selectedGameItemQuantity.Quantity);
+            Player.AddGameItemQuantityToInventory(selectedGameItemQuantity, selectedGameItemQuantity.Quantity);
+
+            OnPlayerPickUp(selectedGameItemQuantity);
+        }
+        public void RemoveItemFromInventory()
+        {
+            if (CurrentGameItem == null) return;
+            var selectedGameItemQuantity = CurrentGameItem;
+
+            _currentLocation.AddGameItemQuantityToLocation(selectedGameItemQuantity);
+            Player.RemoveGameItemQuantityFromInventory(selectedGameItemQuantity);
+
+            OnPlayerPutDown(selectedGameItemQuantity);
+        }
+
+        private void OnPlayerPickUp(GameItemQuantity gameItemQuantity)
+        {
+            Player.Wealth += gameItemQuantity.GameItem.Value;
+        }
+        private void OnPlayerPutDown(GameItemQuantity gameItemQuantity)
+        {
+            Player.Wealth -= gameItemQuantity.GameItem.Value;
+        }
+
+        public void OnUseGameItem()
+        {
+            switch (CurrentGameItem.GameItem)
+            {
+                case Potion potion:
+                    ProcessPotionUse(potion);
+                    break;
+                case Armor armor:
+                    ProcessArmor(armor);
+                    break;
+            }
+
+        }
+
+        private void ProcessPotionUse(Potion potion)
+        {
+            CurrentMessage = potion.UseMessage;
+            Player.ExperiencePoints += potion.XpGain;
+            Player.RemoveGameItemQuantityFromInventory(CurrentGameItem);
+            Player.Wealth -= potion.Value;
+        }
+        private void ProcessArmor(Armor armor)
+        {
+            CurrentMessage = armor.UseMessage;
+            Player.ExperiencePoints += armor.XpGain;
+            Player.RemoveGameItemQuantityFromInventory(CurrentGameItem);
+            Player.Wealth -= armor.Value;
+        }
+
+        public void QuitApplication()
+        {
+            Environment.Exit(0);
+        }
+
+        public void ResetPlayer()
+        {
+            InitializeView();
+        }
+
+        private void OnPlayerDies(string message)
+        {
+            var messagetext = message +
+                              "\n\nWould you like to play again?";
+
+            var titleText = "Death";
+            const MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxResult result = MessageBox.Show(messagetext, titleText, button);
+
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    ResetPlayer();
+                    break;
+                case MessageBoxResult.No:
+                    QuitApplication();
+                    break;
+            }
         }
 
         #endregion

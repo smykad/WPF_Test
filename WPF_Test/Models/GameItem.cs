@@ -7,6 +7,8 @@ namespace WPF_Test.Models
         #region Properties
         public int Id { get; set; }
         public string Name { get; set; }
+        public int XpGain { get; set; }
+        public int Value { get; set; }
         public string Description { get; set; }
         public string UseMessage { get; set; }
         public string Information => InformationString();
@@ -14,10 +16,12 @@ namespace WPF_Test.Models
         #endregion
 
         #region Constructors        
-        public GameItem(int id, string name, string description, string useMessage = ".")
+        public GameItem(int id, string name, int xpGain, int value, string description, string useMessage = ".")
         {
             Id = id;
             Name = name;
+            XpGain = xpGain;
+            Value = value;
             Description = description;
             UseMessage = useMessage;
         }
@@ -29,6 +33,7 @@ namespace WPF_Test.Models
         {
             return $"{Name}: {Description}";
         }
+
 
         #endregion
     }

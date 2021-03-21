@@ -154,17 +154,63 @@
                         </StackPanel>
                     </StackPanel>
                 </Border>
-                <Border
+
+                <Grid
                     Grid.Row="0"
-                    Grid.Column="1"
-                    Margin="10,0,10,10"
-                    Style="{StaticResource BorderStyle}">
-                    <Label Content="NPC/Item Interface PlaceHolder"
-                           Foreground="PowderBlue"
-                           HorizontalContentAlignment="Center"
-                           VerticalContentAlignment="Center"/>
-                    
-                </Border>
+                    Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions> 
+                <TabControl
+                    x:Name="LocationInfoTabControl"
+                    Grid.Row="0"
+                    Height="150"
+                    Width="350"
+                    Background="DarkSlateGray">
+                        <TabItem
+                            Header="Items"
+                            Background="DarkSlateGray"
+                            x:Name="ItemsInfoTabItem">
+                            <DataGrid
+                                x:Name="LocationItemsDataGrid"
+                                Background="DarkSeaGreen"
+                                Height="150"
+                                ItemsSource="{Binding CurrentLocation.GameItems}"
+                                SelectedItem="{Binding CurrentGameItem}"
+                                AutoGenerateColumns="False"
+                                HeadersVisibility="Column">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn
+                                        Header="Description"
+                                        IsReadOnly="True"    
+                                        Binding="{Binding GameItem.Information, Mode=OneWay}"
+                                        Width="*">
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style>
+                                                <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn
+                                        Header="Qty"
+                                        IsReadOnly="True"
+                                        Width="Auto"
+                                        Binding="{Binding Quantity, Mode=OneWay}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </TabItem>
+                    </TabControl>
+                    <StackPanel
+                        Grid.Row="1"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top">
+                        <Button
+                            Content="Pick Up"
+                            Style="{StaticResource MainPanelButtonStyle}"
+                            Click="PickUpButton_Click"/>
+                    </StackPanel>
+                </Grid>
                 <Border
                     Grid.Row="0"
                     Grid.Column="2"
@@ -292,6 +338,40 @@
                                 Content="{Binding MissionTimeDisplay}"
                                 HorizontalAlignment="Center"
                                 Style="{StaticResource MainPanelLabelStyle}"/>
+                            <StackPanel
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                Margin="10">
+                                <Button
+                                    Content="Put Down"
+                                    Style="{StaticResource MainPanelButtonStyle}"
+                                    Click="PutDownButton_Click"/>
+                                <Button
+                                    Content="Use"
+                                    Style="{StaticResource MainPanelButtonStyle}"
+                                    Click="UseButton_Click"/>
+                            </StackPanel>
+                            <DataGrid
+                                x:Name="InventoryDataGrid"
+                                ItemsSource="{Binding Player.Inventory}"
+                                SelectedItem="{Binding CurrentGameItem}"
+                                Height="100"
+                                Margin="5"
+                                Background="DarkSeaGreen"
+                                AutoGenerateColumns="False"
+                                HeadersVisibility="Column">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Name"
+                                                        Binding="{Binding GameItem.Name, Mode=OneWay}"
+                                                        Width="*"
+                                                        IsReadOnly="True"/>
+                                    <DataGridTextColumn Header="Value"
+                                                        Binding="{Binding GameItem.Value, Mode=OneWay}"
+                                                        Width="Auto"
+                                                        IsReadOnly="True"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            
                         </StackPanel>
                     </Grid>
                 </Border>

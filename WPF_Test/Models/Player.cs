@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,8 +20,15 @@ namespace WPF_Test.Models
         private int _lives;
         private int _health;
         private int _experiencePoints;
+        private int _wealth;
         private JobTitleName _jobTitle;
         private List<Location> _locationsVisited;
+
+        public ObservableCollection<GameItemQuantity> Inventory { get; set; }
+        public ObservableCollection<GameItemQuantity> Potions { get; set; }
+        public ObservableCollection<GameItemQuantity> Armor { get; set; }
+
+
 
         #endregion
 
@@ -76,6 +84,15 @@ namespace WPF_Test.Models
                 OnPropertyChanged(nameof(ExperiencePoints));
             }
         }
+        public int Wealth
+        {
+            get => _wealth;
+            set
+            {
+                _wealth = value;
+                OnPropertyChanged(nameof(Wealth));
+            }
+        }
 
         public List<Location> LocationsVisited
         {
@@ -90,6 +107,9 @@ namespace WPF_Test.Models
         public Player()
         {
             _locationsVisited = new List<Location>();
+            Potions = new ObservableCollection<GameItemQuantity>();
+            Armor = new ObservableCollection<GameItemQuantity>();
+            Inventory = new ObservableCollection<GameItemQuantity>();
         }
 
         #endregion
@@ -120,6 +140,68 @@ namespace WPF_Test.Models
             return $"Hello, my name is {_name} and I am {article} {_jobTitle} for the Aion Project.";
         }
 
+        public void UpdateInventory()
+        {
+            Potions.Clear();
+            Armor.Clear();
+            foreach (var gameItemQuantity in Inventory)
+            {
+                switch (gameItemQuantity.GameItem)
+                {
+                    case Potion _:
+                        Potions.Add(gameItemQuantity);
+                        break;
+                    case Armor _:
+                        Armor.Add(gameItemQuantity);
+                        break;
+                }
+            }
+        }
+
+        public void CalculateWealth()
+        {
+            Wealth = Inventory.Sum(i => i.GameItem.Value * i.Quantity);
+        }
+
+        public void AddGameItemQuantityToInventory(GameItemQuantity selectedGameItemQuantity, int quantity)
+        {
+            var gameItemQuantity = Inventory.FirstOrDefault(i => i.GameItem.Id == selectedGameItemQuantity.GameItem.Id);
+
+            if (gameItemQuantity == null)
+            {
+                var newGameItemQuantity = new GameItemQuantity
+                {
+                    GameItem = selectedGameItemQuantity.GameItem,
+                    Quantity = quantity
+                };
+
+                Inventory.Add(newGameItemQuantity);
+            }
+            else
+            {
+                gameItemQuantity.Quantity += quantity;
+            }
+
+            UpdateInventory();
+        }
+        public void RemoveGameItemQuantityFromInventory(GameItemQuantity selectedGameItemQuantity)
+        {
+            var gameItemQuantity = Inventory.FirstOrDefault(i => i.GameItem.Id == selectedGameItemQuantity.GameItem.Id);
+
+            if (gameItemQuantity != null)
+            {
+                if (selectedGameItemQuantity.Quantity == 1)
+                {
+                    Inventory.Remove(gameItemQuantity);
+                }
+                else
+                {
+                    gameItemQuantity.Quantity--;
+                }
+            }
+
+            UpdateInventory();
+        }
         #endregion
 
         #region EVENTS

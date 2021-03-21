@@ -73,6 +73,9 @@ namespace WPF_Test.Models
             set { _modifyHealth = value; }
         }
 
+        public int RequiredItem { get; set; }
+
+
         public int ModifyLives
         {
             get { return _modifyLives; }
@@ -106,6 +109,60 @@ namespace WPF_Test.Models
         public bool IsAccessibleByExperiencePoints(int playerExperiencePoints)
         {
             return playerExperiencePoints >= _requiredExperiencePoints ? true : false;
+        }
+
+        public void UpdateLocationGameItems()
+        {
+            var updatedLocationGameItems = new ObservableCollection<GameItemQuantity>();
+
+            foreach (var gameItemQuantity in GameItems)
+            {
+                updatedLocationGameItems.Add(gameItemQuantity);
+            }
+
+            GameItems.Clear();
+
+            foreach (var gameItemQuantity in updatedLocationGameItems)
+            {
+                GameItems.Add(gameItemQuantity);
+            }
+        }
+
+        public void AddGameItemQuantityToLocation(GameItemQuantity selectedGameItemQuantity)
+        {
+            var gameItemQuantity = GameItems.FirstOrDefault(i => i.GameItem.Id == selectedGameItemQuantity.GameItem.Id);
+
+            if (gameItemQuantity == null)
+            {
+                var newGameItemQuantity = new GameItemQuantity
+                {
+                    GameItem = selectedGameItemQuantity.GameItem,
+                    Quantity = 1
+                };
+
+                GameItems.Add(newGameItemQuantity);
+            }
+            else
+            {
+                gameItemQuantity.Quantity++;
+            }
+
+            UpdateLocationGameItems();
+        }
+
+        public void RemoveGameItemQuantityFromLocation(GameItemQuantity selectedGameItemQuantity, int quantity)
+        {
+            var gameItemQuantity = GameItems.FirstOrDefault(i => i.GameItem.Id == selectedGameItemQuantity.GameItem.Id);
+
+            if (gameItemQuantity != null)
+            {
+                if (selectedGameItemQuantity.Quantity == quantity)
+                {
+                    GameItems.Remove(gameItemQuantity);
+                }
+            }
+
+            UpdateLocationGameItems();
         }
 
         #endregion
