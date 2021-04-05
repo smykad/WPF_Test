@@ -65,8 +65,12 @@ namespace WPF_Test.DataLayer
             //
             // row 1
             //
+            // ***********************
+            // *  Floor I: Room I    *
+            // ***********************
             gameMap.MapLocations[2, 0] = new Location()
             {
+                // First Room
                 Id = 1,
                 Name = "1-1",
                 Description = "The entrance",
@@ -78,8 +82,12 @@ namespace WPF_Test.DataLayer
                     new GameItemQuantity(GameItemByID(101), 2)
                 }
             };
+            // ***********************
+            // *  Floor I: Room II   *
+            // ***********************
             gameMap.MapLocations[2, 1] = new Location()
             {
+                // Second Room
                 Id = 2,
                 Name = "1-2",
                 Description = "The 2nd room in the dungeon where you will encounter an enemy NPC",
@@ -88,12 +96,12 @@ namespace WPF_Test.DataLayer
                 Message = "You encounter an enemy minion (Room 2)",
                 Npcs = new ObservableCollection<Npc> { GetNpcById(9003)}
             };
-
-            //
-            // row 2
-            //
+            // ***********************
+            // *  Floor I: Room III  *
+            // ***********************
             gameMap.MapLocations[2, 2] = new Location()
             {
+                // Third Room
                 Id = 3,
                 Name = "1-3",
                 Description = "You will have another encounter here",
@@ -102,12 +110,21 @@ namespace WPF_Test.DataLayer
                 Message = "This is the third room (Room 3)",
                 Npcs = new ObservableCollection<Npc> { GetNpcById(9004)}
             };
+
+            //
+            // Row 2
+            //
+            // ***********************
+            // *  Floor II: Room III   *
+            // ***********************
             gameMap.MapLocations[1, 0] = new Location()
             {
+                
                 Id = 4,
                 Name = "2-1",
                 Description = "This is a mini boss",
-                Accessible = true,
+                Accessible = false,
+                RequiredRelicId = 301,
                 GameItems = new ObservableCollection<GameItemQuantity>
                 {
                     new GameItemQuantity(GameItemByID(201), 1)
@@ -115,19 +132,26 @@ namespace WPF_Test.DataLayer
                 Message = "Welcome to the mini boss (room 6)",
                 Npcs = new ObservableCollection<Npc> { GetNpcById(9002) }
             };
-
-            //
-            // row 3
-            //
+            // ***********************
+            // *  Floor II: Room II  *
+            // ***********************
             gameMap.MapLocations[1, 1] = new Location()
             {
                 Id = 5,
                 Name = "2-2",
                 Description = "This is a vendor room before the mini boss",
-                Accessible = false,
+                Accessible = true,
+                RequiredExperiencePoints = 1000,
                 Message = "Welcome to the Vendor Room (room 5)",
-                Npcs = new ObservableCollection<Npc> { GetNpcById(8002)}
+                GameItems = new ObservableCollection<GameItemQuantity>
+                {
+                    new GameItemQuantity(GameItemByID(301), 1 )
+                },
+                Npcs = new ObservableCollection<Npc> { GetNpcById(8001)}
             };
+            // ***********************
+            // *  Floor II: Room I *
+            // ***********************
             gameMap.MapLocations[1, 2] = new Location()
             {
                 Id = 6,
@@ -136,29 +160,49 @@ namespace WPF_Test.DataLayer
                 Accessible = true,
                 Message = "Welcome to the treasure room (room 4)"
             };
+
+            //
+            // row 3
+            //
+            // ***********************
+            // *  Floor III: Room I  *
+            // ***********************
             gameMap.MapLocations[0, 0] = new Location()
             {
                 Id = 7,
                 Name = "3-1",
                 Description = "You encounter an NPC",
-                Accessible = true,
+                Accessible = false,
+                RequiredRelicId = 301,
                 Message = "Welcome to the final boss (room 7)",
-                Npcs = new ObservableCollection<Npc> { GetNpcById(8001)}
+                Npcs = new ObservableCollection<Npc> { GetNpcById(8001)},
+                GameItems = new ObservableCollection<GameItemQuantity> 
+                { 
+                    new GameItemQuantity(GameItemByID(302), 1)
+                }
+
             };
+            // ***********************
+            // * Floor III: Room II  *
+            // ***********************
             gameMap.MapLocations[0, 1] = new Location()
             {
                 Id = 8,
                 Name = "3-2",
                 Description = "Safe room before final boss, health restored to full",
-                Accessible = true,
+                Accessible = false,
+                RequiredRelicId = 301,
                 Message = "Beware, the final boss is to the east (room 8)"
             };
+            // ***********************
+            // * Floor III: Room III *
+            // ***********************
             gameMap.MapLocations[0, 2] = new Location()
             {
                 Id = 9,
                 Name = "3-3",
                 Description = "Final Boss Room",
-                RequiredItem = 201,
+                RequiredRelicId = 302,
                 Accessible = false,
                 Message = "Welcome to the Boss (room 9)",
                 Npcs = new ObservableCollection<Npc> { GetNpcById(9001) }
@@ -180,7 +224,10 @@ namespace WPF_Test.DataLayer
 
                 new Armor(201, "Dark Iron Armor", 20,  500, Armor.ArmorType.Plate, 0, "This armor emanates with the power of Dark Iron", "You have gained 20 xp"),
                 new Armor(202, "Dark Elf Armor", 20, 500, Armor.ArmorType.Leather, 0,"This armor emanates with the power of Dark Elves", "You have gained 20 xp"),
-                new Armor(203, "Arcane Armor", 20, 500, Armor.ArmorType.Cloth, 0, "This armor emanates with the power of the Arcane", "You have gained 20 xp")
+                new Armor(203, "Arcane Armor", 20, 500, Armor.ArmorType.Cloth, 0, "This armor emanates with the power of the Arcane", "You have gained 20 xp"),
+
+                new Relic(301, "Shrubbery", 0, 0, "Not too expensive","This shrubbery looks nice!", Relic.UseActionType.OPENLOCATION ),
+                new Relic(302, "Holy Hand Grenade of Antioch", 0, 0, "A grenade consecrated by Saint Atilla", "You can now engage the Killer Rabbit of Caerbannog", Relic.UseActionType.OPENLOCATION)
 
             };
         }
@@ -194,14 +241,13 @@ namespace WPF_Test.DataLayer
                 new Enemy()
                 {
                     Id = 9001,
-                    Name = "Guy De Lombard",
-                    Race = Character.RaceType.Human,
-                    Description = "Already has a Holy Grail",
+                    Name = "Killer Rabbit of Caerbannog",
+                    Description = "Has giant fangs",
                     Messages = new List<string>()
                     {
-                        "Severed heads never go out of fashion!",
-                        "You will never take me alive!",
-                        "You can't make an omelet without killing a few people!"
+                        "Screeeech",
+                        "Screeeeeeeeech",
+                        "Screech"
                     },
                     SkillLevel = 10
                 },

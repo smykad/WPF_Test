@@ -93,6 +93,7 @@
     <Compile Include="Models\Npc.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Potion.cs" />
+    <Compile Include="Models\Relic.cs" />
     <Compile Include="Models\Vendor.cs" />
     <Compile Include="ObservableObject.cs" />
     <Compile Include="PresentationLayer\GameSessionView.xaml.cs">

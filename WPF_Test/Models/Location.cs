@@ -73,7 +73,7 @@ namespace WPF_Test.Models
             set { _modifyHealth = value; }
         }
 
-        public int RequiredItem { get; set; }
+        public int RequiredRelicId { get; set; }
 
 
         public int ModifyLives

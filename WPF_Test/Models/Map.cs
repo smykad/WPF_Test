@@ -9,15 +9,18 @@ namespace WPF_Test.Models
     public class Map
     {
         #region FIELDS
-
         private Location[,] _mapLocations;
-        private int _maxRows, _maxColumns;
+        private int _maxRows, _maxColumns, _requiredRelicId;
         private GameMapCoordinates _currentLocationCoordinates;
 
         #endregion
 
         #region PROPERTIES
-
+        public int RequiredRelicId
+        {
+            get { return _requiredRelicId; }
+            set { _requiredRelicId = value; }
+        }
         public Location[,] MapLocations
         {
             get { return _mapLocations; }
@@ -198,21 +201,27 @@ namespace WPF_Test.Models
             return westLocation;
         }
 
-        public string OpenLocationsByItem(int itemId)
+
+
+        public string OpenLocationsByRelic(int relicId)
         {
-            var message = "The Item did nothing.";
+            string message = "The relic did nothing.";
+            Location mapLocation = new Location();
 
-            for (var row = 0; row < _maxRows; row++)
+            for (int row = 0; row < _maxRows; row++)
             {
-                for (var column = 0; column < _maxColumns; column++)
+                for (int column = 0; column < _maxColumns; column++)
                 {
-                    var mapLocation = MapLocations[row, column];
+                    mapLocation = _mapLocations[row, column];
 
-                    if (mapLocation == null || mapLocation.RequiredItem != itemId) continue;
-                    mapLocation.Accessible = true;
-                    message = $"{mapLocation.Name} is now accessible.";
+                    if (mapLocation != null && mapLocation.RequiredRelicId == relicId)
+                    {
+                        mapLocation.Accessible = true;
+                        message = $"{mapLocation.Name} is now accessible.";
+                    }
                 }
             }
+
             return message;
         }
 

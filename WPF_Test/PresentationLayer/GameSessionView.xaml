@@ -425,7 +425,7 @@
                                         SelectedItem="{Binding CurrentGameItem}">
                                         <DataGrid.Columns>
                                             <DataGridTextColumn
-                                                Width="Auto"
+                                                Width="2*"
                                                 Binding="{Binding GameItem.Name, Mode=OneWay}"
                                                 Header="Name"
                                                 IsReadOnly="True"/>
@@ -470,6 +470,31 @@
                                                 Binding="{Binding Quantity, Mode=OneWay}"
                                                 Header="QTY"
                                                 IsReadOnly="True" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </TabItem>
+                                <TabItem 
+                                    Header="Relics"
+                                    x:Name="RelicsTabItem">
+                                    <DataGrid 
+                                        x:Name="RelicsDataGrid"
+                                        Background="DarkSeaGreen"
+                                        Height="80"
+                                        ItemsSource="{Binding Player.Relics}"
+                                        SelectedItem="{Binding CurrentGameItem}"
+                                        AutoGenerateColumns="False"
+                                        HeadersVisibility="Column">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Name"
+                                                Binding="{Binding GameItem.Name, Mode=OneWay}"
+                                                Width="*"/>
+                                            <DataGridTextColumn Header="Qty"
+                                                IsReadOnly="True"
+                                                Width="Auto"
+                                                Binding="{Binding Quantity, Mode=OneWay}"/>
+                                            <DataGridTextColumn Header="Value"
+                                                Binding="{Binding GameItem.Value, Mode=OneWay}"
+                                                Width="Auto"/>
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </TabItem>

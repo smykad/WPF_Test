@@ -245,8 +245,8 @@ namespace WPF_Test.PresentationLayer
 
                 //
                 // location generally accessible or player has required conditions
-                //
-                if (nextNorthLocation.Accessible == true || PlayerCanAccessLocation(nextNorthLocation))
+                // || PlayerCanAccessLocation(nextNorthLocation)
+                if (nextNorthLocation.Accessible == true )
                 {
                     NorthLocation = nextNorthLocation;
                 }
@@ -261,8 +261,8 @@ namespace WPF_Test.PresentationLayer
 
                 //
                 // location generally accessible or player has required conditions
-                //
-                if (nextEastLocation.Accessible == true || PlayerCanAccessLocation(nextEastLocation))
+                // || PlayerCanAccessLocation(nextEastLocation)
+                if (nextEastLocation.Accessible == true )
                 {
                     EastLocation = nextEastLocation;
                 }
@@ -277,8 +277,8 @@ namespace WPF_Test.PresentationLayer
 
                 //
                 // location generally accessible or player has required conditions
-                //
-                if (nextSouthLocation.Accessible == true || PlayerCanAccessLocation(nextSouthLocation))
+                // || PlayerCanAccessLocation(nextSouthLocation)
+                if (nextSouthLocation.Accessible == true )
                 {
                     SouthLocation = nextSouthLocation;
                 }
@@ -293,8 +293,8 @@ namespace WPF_Test.PresentationLayer
 
                 //
                 // location generally accessible or player has required conditions
-                //
-                if (nextWestLocation.Accessible == true || PlayerCanAccessLocation(nextWestLocation))
+                // || PlayerCanAccessLocation(nextWestLocation)
+                if (nextWestLocation.Accessible == true )
                 {
                     WestLocation = nextWestLocation;
                 }
@@ -517,6 +517,9 @@ namespace WPF_Test.PresentationLayer
                     case Armor armor:
                         ProcessArmor(armor);
                         break;
+                    case Relic relic:
+                        ProcessRelicUse(relic);
+                        break;
                     default:
                         break;
                 }
@@ -526,6 +529,21 @@ namespace WPF_Test.PresentationLayer
                 CurrentMessage = "Sorry, there is no use for that!";
             }
 
+        }
+        private void ProcessRelicUse(Relic relic)
+        {
+            string message;
+
+            switch (relic.UseAction)
+            {
+                case Relic.UseActionType.OPENLOCATION:
+                    message = _gameMap.OpenLocationsByRelic(relic.Id);
+                    CurrentMessage = relic.UseMessage;
+                    UpdateAvailableTravelPoints();
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void ProcessPotionUse(Potion potion)

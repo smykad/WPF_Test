@@ -19,7 +19,7 @@ namespace WPF_Test.Models
 
         protected override string InformationText()
         {
-            return $"{Name} - {Description}";
+            return $"{Name} - {Race} - {Description}";
         }
 
         public Enemy()
