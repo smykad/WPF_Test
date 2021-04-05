@@ -84,5 +84,13 @@ namespace WPF_Test.PresentationLayer
             }
 
         }
+
+        private void SpeakToNpcButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(LocationNpcsDataGrid.SelectedItem != null)
+            {
+                _gameSessionViewModel.OnPlayerTalkTo();
+            }
+        }
     }
 }

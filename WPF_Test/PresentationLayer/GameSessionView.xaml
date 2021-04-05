@@ -226,15 +226,46 @@
                             </DataGrid>
                         </TabItem>
                     </TabControl>
-                    <StackPanel
-                        Grid.Row="1"
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="2*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel
+                        Grid.Row="0"
+                        Margin="5"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Top">
-                        <Button
-                            Content="Pick Up"
-                            Style="{StaticResource MainPanelButtonStyle}"
-                            Click="PickUpButton_Click"/>
-                    </StackPanel>
+                            <Button
+                                Margin="5"
+                                Content="Pick Up"
+                                Style="{StaticResource MainPanelButtonStyle}"
+                                Click="PickUpButton_Click"/>
+                            <Button
+                                Content="Talk To"
+                                Style="{StaticResource MainPanelButtonStyle}"
+                                Click="SpeakToNpcButton_Click"/>
+                        </StackPanel>
+                        <Border
+                            Grid.Row="1"
+                            Margin="10 20"
+                            Padding="0"
+                            BorderThickness="10px"
+                            Background="DarkSeaGreen"
+                            Style="{StaticResource BorderStyle}">
+                            <TextBox
+                                Height="auto"
+                                Width="auto"
+                                Margin="10"
+                                BorderThickness="0"
+                                TextWrapping="Wrap"
+                                Text="{Binding CurrentMessage, Mode=OneWay}"
+                                VerticalScrollBarVisibility="Auto"
+                                VerticalContentAlignment="top"
+                                Style="{StaticResource MainPanelTextBoxStyle}"/>
+                        </Border>
+                        
+                    </Grid>
                 </Grid>
                 <Border
                     Grid.Row="0"

@@ -55,7 +55,11 @@ namespace WPF_Test.PresentationLayer
         public string CurrentMessage
         {
             get { return _currentMessage; }
-            set { _currentMessage = value; }
+            set 
+            { 
+                _currentMessage = value;
+                OnPropertyChanged(nameof(CurrentMessage));
+            }
         }
         public string MessageDisplay
         {
@@ -503,14 +507,23 @@ namespace WPF_Test.PresentationLayer
 
         public void OnUseGameItem()
         {
-            switch (CurrentGameItem.GameItem)
+            try
             {
-                case Potion potion:
-                    ProcessPotionUse(potion);
-                    break;
-                case Armor armor:
-                    ProcessArmor(armor);
-                    break;
+                switch (CurrentGameItem.GameItem)
+                {
+                    case Potion potion:
+                        ProcessPotionUse(potion);
+                        break;
+                    case Armor armor:
+                        ProcessArmor(armor);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (NullReferenceException)
+            {
+                CurrentMessage = "Sorry, there is no use for that!";
             }
 
         }
@@ -537,7 +550,7 @@ namespace WPF_Test.PresentationLayer
             if (CurrentNpc != null && CurrentNpc is ISpeak)
             {
                 ISpeak speakingNpc = CurrentNpc as ISpeak;
-                CurrentLocationInformation = speakingNpc.Speak();
+                CurrentMessage = speakingNpc.Speak();
             }
         }
         #endregion
