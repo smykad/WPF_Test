@@ -65,6 +65,7 @@ namespace WPF_Test.DataLayer
             //
             // row 1
             //
+
             // ***********************
             // *  Floor I: Room I    *
             // ***********************
@@ -114,6 +115,7 @@ namespace WPF_Test.DataLayer
             //
             // Row 2
             //
+
             // ***********************
             // *  Floor II: Room III   *
             // ***********************
@@ -163,6 +165,7 @@ namespace WPF_Test.DataLayer
             //
             // row 3
             //
+
             // ***********************
             // *  Floor III: Room I  *
             // ***********************
@@ -217,16 +220,19 @@ namespace WPF_Test.DataLayer
         {
             return new List<GameItem>()
             {
-                new Potion(101, "Health Potion", 100, 50, 50, 0, "Health Potion restores 50 HP", "You restored 50 HP"),
-                new Potion(103, "Bonus Life Potion", 150, 0, 0, 1, "Bonus Life potion grants 1 life", "You gained a life!"),
-                new Potion(104, "XP Potion", 100, 0, 0, 100, "Bonus XP potion grants 100 xp", "You gained 100 xp"),
+                new Potion(101, "Health Potion", 100, 50, 50, 0, "restores 50 HP", "You restored 50 HP"),
+                new Potion(103, "Bonus Life Potion", 150, 0, 0, 1, "grants 1 life", "You gained a life!"),
+                new Potion(104, "XP Potion", 100, 0, 0, 100, "grants 100 xp", "You gained 100 xp"),
 
-                new Armor(201, "Dark Iron Armor", 20,  500, Armor.ArmorType.Chest, 0, "This armor emanates with the power of Dark Iron", "You have gained 20 xp"),
+                new Armor(201, "Dark Iron Armor", 20,  500, Armor.ArmorType.Chest, 0, "is an armor emanates with the power of Dark Iron", "You have gained 20 xp"),
                 new Armor(202, "Dark Iron Helmet", 20, 500, Armor.ArmorType.Helmet, 0,"This armor emanates with the power of Dark Elves", "You have gained 20 xp"),
                 new Armor(203, "Dark Iron Cloak", 20, 500, Armor.ArmorType.Cloak, 0, "This armor emanates with the power of the Arcane", "You have gained 20 xp"),
 
-                new Relic(301, "Shrubbery", 0, 0, "Not too expensive","This shrubbery looks nice!", Relic.UseActionType.OPENLOCATION ),
-                new Relic(302, "Holy Hand Grenade of Antioch", 0, 0, "A grenade consecrated by Saint Atilla", "You can now engage the Killer Rabbit of Caerbannog", Relic.UseActionType.OPENLOCATION)
+                new Relic(301, "Shrubbery", 0, 0, "is not too expensive","This shrubbery looks nice!", Relic.UseActionType.OPENLOCATION ),
+                new Relic(302, "Holy Hand Grenade of Antioch", 0, 0, "is a grenade consecrated by Saint Atilla", "You can now engage the Killer Rabbit of Caerbannog", Relic.UseActionType.OPENLOCATION),
+
+                new Money(401, "Gold Coin", 0, 25, "A shiny gold coin", "You throw a gold coin to your Shrubber", Money.MoneyType.GOLD),
+                new Money(402, "Gold Coin", 0, 25, "A shiny silver coin", "You throw a silver coin to your Shrubber", Money.MoneyType.SILVER)
 
             };
         }

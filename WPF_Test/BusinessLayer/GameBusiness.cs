@@ -40,7 +40,8 @@ namespace WPF_Test.BusinessLayer
                 _player.SkillLevel = 5;
                 _player.Inventory = new ObservableCollection<GameItemQuantity>()
                 {
-                    new GameItemQuantity(GameData.GameItemByID(101), 1)
+                    new GameItemQuantity(GameData.GameItemByID(101), 1),
+                    new GameItemQuantity(GameData.GameItemByID(401), 25)
                 };
             }
             else

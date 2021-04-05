@@ -18,7 +18,7 @@
         public string Description { get; set; }
         public QuestStatus Status { get; set; }
         public string StatusDetail { get; set; }
-        public int ExperienceGain { get; set; }
+        public int GoldGain { get; set; }
         #endregion
 
         #region CONSTRUCTOR

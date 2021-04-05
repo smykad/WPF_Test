@@ -29,8 +29,8 @@ namespace WPF_Test.Models
         public ObservableCollection<GameItemQuantity> Inventory { get; set; }
         public ObservableCollection<GameItemQuantity> Potions { get; set; }
         public ObservableCollection<GameItemQuantity> Armor { get; set; }
-
         public ObservableCollection<GameItemQuantity> Relics { get; set; }
+        public ObservableCollection<GameItemQuantity> Money { get; set; }
 
 
 
@@ -127,6 +127,7 @@ namespace WPF_Test.Models
             Armor = new ObservableCollection<GameItemQuantity>();
             Inventory = new ObservableCollection<GameItemQuantity>();
             Relics = new ObservableCollection<GameItemQuantity>();
+            Money = new ObservableCollection<GameItemQuantity>();
         }
 
         #endregion
@@ -180,12 +181,14 @@ namespace WPF_Test.Models
             Potions.Clear();
             Armor.Clear();
             Relics.Clear();
+            Money.Clear();
 
             foreach (var gameItemQuantity in Inventory)
             {
                 if (gameItemQuantity.GameItem is Potion) Potions.Add(gameItemQuantity);
                 if (gameItemQuantity.GameItem is Armor) Armor.Add(gameItemQuantity);
                 if (gameItemQuantity.GameItem is Relic) Relics.Add(gameItemQuantity);
+                if (gameItemQuantity.GameItem is Money) Money.Add(gameItemQuantity);
             }
         }
         /// <summary>

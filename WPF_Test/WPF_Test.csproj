@@ -94,6 +94,7 @@
     <Compile Include="Models\Ispeak.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Map.cs" />
+    <Compile Include="Models\Money.cs" />
     <Compile Include="Models\Npc.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Potion.cs" />

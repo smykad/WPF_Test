@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WPF_Test.Models
+﻿namespace WPF_Test.Models
 {
     public class Relic : GameItem
     {
@@ -24,7 +18,7 @@ namespace WPF_Test.Models
 
         public override string InformationString()
         {
-            return $"{Name}: {Description}\nValue: {Value}";
+            return $"{Name}: {Description}";
         }
     }
 }

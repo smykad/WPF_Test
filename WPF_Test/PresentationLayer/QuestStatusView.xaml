@@ -86,31 +86,37 @@
 
         <DataGrid
             x:Name="Quests"
+            Grid.Row="2"            
             Grid.Column="1"
-            Grid.Row="2"
             Margin="10"
+            AutoGenerateColumns="False"
+            FontSize="16"
+            Background="DarkSeaGreen"
+            HeadersVisibility="Column"
             ItemsSource="{Binding Quests}">
-            <DataGridTextColumn
+            <DataGrid.Columns>
+                <DataGridTextColumn
                     Width="*"
                     Binding="{Binding Name, Mode=OneWay}"
                     Header="Name"
                     IsReadOnly="True" />
-            <DataGridTextColumn
+                <DataGridTextColumn
                     Width="*"
                     Binding="{Binding Status, Mode=OneWay}"
                     Header="Status"
                     IsReadOnly="True" />
-            <DataGridTextColumn
+                <DataGridTextColumn
                     Width="3*"
                     Binding="{Binding StatusDetail}"
                     Header="Details"
                     IsReadOnly="True">
-                <DataGridTextColumn.ElementStyle>
-                    <Style>
-                        <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
-                    </Style>
-                </DataGridTextColumn.ElementStyle>
-            </DataGridTextColumn>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style>
+                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
         </DataGrid>
         <Button
             Grid.Row="3"

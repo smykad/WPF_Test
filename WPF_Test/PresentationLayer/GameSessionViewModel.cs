@@ -26,7 +26,6 @@ namespace WPF_Test.PresentationLayer
 
         private Location _currentLocation;
         private Location _northLocation, _eastLocation, _southLocation, _westLocation;
-        private string _currentLocationInformation;
 
         private Random random = new Random();
 
@@ -55,15 +54,6 @@ namespace WPF_Test.PresentationLayer
         public string MessageDisplay
         {
             get { return _currentLocation.Message; }
-        }
-        public string CurrentLocationInformation
-        {
-            get { return _currentLocationInformation; }
-            set
-            {
-                _currentLocationInformation = value;
-                OnPropertyChanged(nameof(CurrentLocationInformation));
-            }
         }
         public GameItemQuantity CurrentGameItem
         {
@@ -190,9 +180,9 @@ namespace WPF_Test.PresentationLayer
         /// </summary>
         private static void BackgroundMusic()
         {
-            var backgroundMusic = new SoundPlayer("PresentationLayer/Resources/background.wav");
-            backgroundMusic.Load();
-            backgroundMusic.PlayLooping();
+            //var backgroundMusic = new SoundPlayer("PresentationLayer/Resources/background.wav");
+            //backgroundMusic.Load();
+            //backgroundMusic.PlayLooping();
         }
         #endregion
 
@@ -438,7 +428,6 @@ namespace WPF_Test.PresentationLayer
         {
             _gameStartTime = DateTime.Now;
             UpdateAvailableTravelPoints();
-            _currentLocationInformation = CurrentLocation.Description;
             Player.UpdateInventory();
             Player.CalculateWealth();
         }
@@ -480,6 +469,7 @@ namespace WPF_Test.PresentationLayer
         private void OnPlayerPickUp(GameItemQuantity gameItemQuantity)
         {
             Player.Wealth += gameItemQuantity.GameItem.Value;
+            CurrentMessage = $"You picked up {gameItemQuantity.GameItem.Name}, it {gameItemQuantity.GameItem.Description}";
         }
         private void OnPlayerPutDown(GameItemQuantity gameItemQuantity)
         {
@@ -501,6 +491,9 @@ namespace WPF_Test.PresentationLayer
                     case Relic relic:
                         ProcessRelicUse(relic);
                         break;
+                    case Money money:
+                        ProcessMoney(money);
+                        break;
                     default:
                         break;
                 }
@@ -510,6 +503,21 @@ namespace WPF_Test.PresentationLayer
                 CurrentMessage = "Sorry, there is no use for that!";
             }
 
+        }
+        private void ProcessMoney(Money money)
+        {
+            
+            switch(money.Type)
+            {
+                case Money.MoneyType.GOLD:
+                    CurrentMessage = money.UseMessage;
+                    break;
+                case Money.MoneyType.SILVER:
+                    CurrentMessage = money.UseMessage;
+                    break;
+                default:
+                    break;
+            }
         }
         private void ProcessRelicUse(Relic relic)
         {

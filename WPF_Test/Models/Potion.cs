@@ -22,18 +22,7 @@
         
         public override string InformationString()
         {
-            if(HealthChange != 0)
-            {
-                return $"{Name}: {Description}\nHealth: {HealthChange}";
-            }
-            else if (LivesChange !=0)
-            {
-                return $"{Name}: {Description}\nLives: {LivesChange}";
-            }
-            else
-            {
-                return $"{Name}: {Description}";
-            }
+            return $"{Name}: {Description}";
         }
         #endregion
 
