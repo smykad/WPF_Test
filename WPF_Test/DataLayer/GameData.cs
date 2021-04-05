@@ -76,8 +76,7 @@ namespace WPF_Test.DataLayer
                 GameItems = new ObservableCollection<GameItemQuantity>
                 {
                     new GameItemQuantity(GameItemByID(101), 2)
-                },
-                Npcs = new ObservableCollection<Npc> { GetNpcById(9001) }
+                }
             };
             gameMap.MapLocations[2, 1] = new Location()
             {
@@ -100,7 +99,8 @@ namespace WPF_Test.DataLayer
                 Description = "You will have another encounter here",
                 Accessible = true,
                 ModifiyExperiencePoints = 10,
-                Message = "This is the third room (Room 3)"
+                Message = "This is the third room (Room 3)",
+                Npcs = new ObservableCollection<Npc> { GetNpcById(9004)}
             };
             gameMap.MapLocations[1, 0] = new Location()
             {
@@ -125,7 +125,8 @@ namespace WPF_Test.DataLayer
                 Name = "2-2",
                 Description = "This is a vendor room before the mini boss",
                 Accessible = false,
-                Message = "Welcome to the Vendor Room (room 5)"
+                Message = "Welcome to the Vendor Room (room 5)",
+                Npcs = new ObservableCollection<Npc> { GetNpcById(8002)}
             };
             gameMap.MapLocations[1, 2] = new Location()
             {
@@ -141,7 +142,8 @@ namespace WPF_Test.DataLayer
                 Name = "3-1",
                 Description = "You encounter an NPC",
                 Accessible = true,
-                Message = "Welcome to the final boss (room 7)"
+                Message = "Welcome to the final boss (room 7)",
+                Npcs = new ObservableCollection<Npc> { GetNpcById(8001)}
             };
             gameMap.MapLocations[0, 1] = new Location()
             {
@@ -198,7 +200,7 @@ namespace WPF_Test.DataLayer
                     Messages = new List<string>()
                     {
                         "Severed heads never go out of fashion!",
-                        "Did ye just call me short?",
+                        "You will never take me alive!",
                         "You can't make an omelet without killing a few people!"
                     },
                     SkillLevel = 10
@@ -230,6 +232,19 @@ namespace WPF_Test.DataLayer
                     },
                     SkillLevel = 2
                 },
+                new Enemy()
+                {
+                    Id = 9004,
+                    Name = "Knights of Ni",
+                    Race = Character.RaceType.Human,
+                    Description = "Cannot stand 'it'",
+                    Messages = new List<string>()
+                    {
+                        "Ni!",
+                        "We want... A SHRUBBERY!!!",
+                        "We are the knights who say..... Ni!"
+                    }
+                },
                 new Vendor()
                 {
                     Id = 8001,
@@ -248,7 +263,21 @@ namespace WPF_Test.DataLayer
                        // new GameItemQuantity(GameItemByID(103), 10),
                        // new GameItemQuantity(GameItemByID(104), 10)
                     //}
+                },
+                new Vendor()
+                {
+                    Id = 8002,
+                    Name = "Brother Maynard",
+                    Race = Character.RaceType.Human,
+                    Description = "Keeper of the Holy Hand Grenade of Antioch",
+                    Messages = new List<string>()
+                    {
+                        "And the Lord spake, saying, 'First shalt thou take out the Holy Pin'",
+                        "Then, shalt thou count to three, no more, no less",
+                        "Three shall be the number thou shalt count, and the number of the counting shall be three"
+                    }
                 }
+                
             };
         }
         #endregion

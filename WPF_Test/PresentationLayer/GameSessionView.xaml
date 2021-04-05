@@ -242,9 +242,9 @@
                                 Style="{StaticResource MainPanelButtonStyle}"
                                 Click="PickUpButton_Click"/>
                             <Button
-                                Content="Talk To"
-                                Style="{StaticResource MainPanelButtonStyle}"
-                                Click="SpeakToNpcButton_Click"/>
+                            Content="Talk To"
+                            Style="{StaticResource MainPanelButtonStyle}"
+                            Click="SpeakToNpcButton_Click"/>
                         </StackPanel>
                         <Border
                             Grid.Row="1"
