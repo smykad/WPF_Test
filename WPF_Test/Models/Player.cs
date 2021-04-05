@@ -48,6 +48,12 @@ namespace WPF_Test.Models
             }
         }
 
+        public BattleModeName BattleMode
+        {
+            get { return _battleMode; }
+            set { _battleMode = value; }
+        }
+
         public JobTitleName JobTitle
         {
             get { return _jobTitle; }

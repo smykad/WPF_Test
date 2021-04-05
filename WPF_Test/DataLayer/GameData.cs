@@ -217,8 +217,8 @@ namespace WPF_Test.DataLayer
         {
             return new List<GameItem>()
             {
-                new Potion(101, "Health Potion", 100, 50, 0, 0, "Health Potion restores 50 HP", "You restored 50 HP"),
-                new Potion(103, "Bonus Life Potion", 150, 0, 1, 0, "Bonus Life potion grants 1 life", "You gained a life!"),
+                new Potion(101, "Health Potion", 100, 50, 50, 0, "Health Potion restores 50 HP", "You restored 50 HP"),
+                new Potion(103, "Bonus Life Potion", 150, 0, 0, 1, "Bonus Life potion grants 1 life", "You gained a life!"),
                 new Potion(104, "XP Potion", 100, 0, 0, 100, "Bonus XP potion grants 100 xp", "You gained 100 xp"),
 
                 new Armor(201, "Dark Iron Armor", 20,  500, Armor.ArmorType.Chest, 0, "This armor emanates with the power of Dark Iron", "You have gained 20 xp"),

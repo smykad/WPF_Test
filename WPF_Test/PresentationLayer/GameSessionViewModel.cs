@@ -531,6 +531,7 @@ namespace WPF_Test.PresentationLayer
         {
             CurrentMessage = potion.UseMessage;
             Player.ExperiencePoints += potion.XpGain;
+            Player.Health += potion.HealthChange;
             Player.RemoveGameItemQuantityFromInventory(CurrentGameItem);
             Player.Wealth -= potion.Value;
         }
@@ -551,6 +552,133 @@ namespace WPF_Test.PresentationLayer
                 ISpeak speakingNpc = CurrentNpc as ISpeak;
                 CurrentMessage = speakingNpc.Speak();
             }
+        }
+        #endregion
+
+        #region BATTLE METHODS
+
+        /// <summary>
+        /// handle the attack event in the view.
+        /// </summary>
+        public void OnPlayerAttack()
+        {
+            _player.BattleMode = BattleModeName.ATTACK;
+            Battle();
+        }
+
+        /// <summary>
+        /// handle the defend event in the view.
+        /// </summary>
+        public void OnPlayerDefend()
+        {
+            _player.BattleMode = BattleModeName.DEFEND;
+            Battle();
+        }
+
+        /// <summary>
+        /// handle the retreat event in the view.
+        /// </summary>
+        public void OnPlayerRetreat()
+        {
+            _player.BattleMode = BattleModeName.RETREAT;
+            Battle();
+        }
+
+        private void Battle()
+        {
+
+            if(_currentNpc is IBattle)
+            {
+                IBattle battleNpc = _currentNpc as IBattle;
+                int playerHitPoints = 0;
+                int battleNpcHitPoints = 0;
+                string battleInformation = "";
+
+                playerHitPoints = CalculatePlayerHitPoints();
+                battleNpcHitPoints = CalculateNpcHitPoints(battleNpc);
+
+                battleInformation +=
+                    $"Player: {_player.BattleMode}     Hit Points: {playerHitPoints}" + Environment.NewLine +
+                    $"NPC: {battleNpc.BattleMode}     Hit Points: {battleNpcHitPoints}" + Environment.NewLine;
+                if (playerHitPoints >= battleNpcHitPoints)
+                {
+                    battleInformation += $"You have slain {_currentNpc.Name}.";
+                    _currentLocation.Npcs.Remove(_currentNpc);
+                }
+                else
+                {
+                    battleInformation += $"You have been slain by {_currentNpc.Name}.";
+                    _player.Lives--;
+                }
+
+                CurrentMessage = battleInformation;
+                _player.Health = playerHitPoints;
+                if (_player.Lives <= 0) OnPlayerDies("You have been slain and have no lives left.");
+
+            }
+            else
+            {
+                CurrentMessage = "The current NPC is not an enemy, you may not engage in combat";
+            }
+        }
+
+        private int CalculatePlayerHitPoints()
+        {
+            int playerHitPoints = 0;
+
+            switch (_player.BattleMode)
+            {
+                case BattleModeName.ATTACK:
+                    playerHitPoints = _player.Attack();
+                    break;
+                case BattleModeName.DEFEND:
+                    playerHitPoints = _player.Defend();
+                    break;
+                case BattleModeName.RETREAT:
+                    playerHitPoints = _player.Retreat();
+                    break;
+            }
+
+            return playerHitPoints;
+        }
+
+        private int CalculateNpcHitPoints(IBattle battleNpc)
+        {
+            int battleNpcHitPoints = 0;
+
+            switch (NpcBattleResponse())
+            {
+                case BattleModeName.ATTACK:
+                    battleNpcHitPoints = battleNpc.Attack();
+                    break;
+                case BattleModeName.DEFEND:
+                    battleNpcHitPoints = battleNpc.Defend();
+                    break;
+                case BattleModeName.RETREAT:
+                    battleNpcHitPoints = battleNpc.Retreat();
+                    break;
+            }
+
+            return battleNpcHitPoints;
+        }
+
+        private BattleModeName NpcBattleResponse()
+        {
+            BattleModeName npcBattleResponse = BattleModeName.RETREAT;
+
+            switch (DieRoll(3))
+            {
+                case 1:
+                    npcBattleResponse = BattleModeName.ATTACK;
+                    break;
+                case 2:
+                    npcBattleResponse = BattleModeName.DEFEND;
+                    break;
+                case 3:
+                    npcBattleResponse = BattleModeName.RETREAT;
+                    break;
+            }
+            return npcBattleResponse;
         }
         #endregion
 
