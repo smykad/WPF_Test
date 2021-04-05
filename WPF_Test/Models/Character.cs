@@ -25,6 +25,7 @@ namespace WPF_Test.Models
         protected int _locationId;
         protected int _age;
         protected RaceType _race;
+        protected Random random = new Random();
 
         #endregion
 

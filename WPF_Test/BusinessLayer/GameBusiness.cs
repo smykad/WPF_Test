@@ -37,6 +37,7 @@ namespace WPF_Test.BusinessLayer
                 _player.ExperiencePoints = 0;
                 _player.Health = 100;
                 _player.Lives = 3;
+                _player.SkillLevel = 5;
                 _player.Inventory = new ObservableCollection<GameItemQuantity>()
                 {
                     new GameItemQuantity(GameData.GameItemByID(101), 1)

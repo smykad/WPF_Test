@@ -23,6 +23,7 @@ namespace WPF_Test.DataLayer
                 Lives = 3,
                 ExperiencePoints = 10,
                 LocationId = 0,
+                SkillLevel = 5,
                 Inventory = new ObservableCollection<GameItemQuantity>()
                 {
                     new GameItemQuantity(GameItemByID(101), 1)
@@ -49,6 +50,10 @@ namespace WPF_Test.DataLayer
         {
             return StandardGameItems().FirstOrDefault(i => i.Id == id);
         }
+        public static Npc GetNpcById(int id)
+        {
+            return Npcs().FirstOrDefault(i => i.Id == id);
+        }
         public static Map GameMap()
         {
             int rows = 3;
@@ -64,15 +69,15 @@ namespace WPF_Test.DataLayer
             {
                 Id = 1,
                 Name = "1-1",
-                Description = "You will get to choose your weapon here",
+                Description = "The entrance",
                 Accessible = true,
                 ModifiyExperiencePoints = 10,
-                Message = "Welcome to my Dungeon, you have been tasked with defeating a monster at the end of this dungeon.  " +
-                "Choose a weapon of your choice (Room 1)",
+                Message = "You find yourself in the entrance of a dungeon",
                 GameItems = new ObservableCollection<GameItemQuantity>
                 {
                     new GameItemQuantity(GameItemByID(101), 2)
-                }
+                },
+                Npcs = new ObservableCollection<Npc> { GetNpcById(9001) }
             };
             gameMap.MapLocations[2, 1] = new Location()
             {
@@ -81,7 +86,8 @@ namespace WPF_Test.DataLayer
                 Description = "The 2nd room in the dungeon where you will encounter an enemy NPC",
                 Accessible = true,
                 ModifiyExperiencePoints = 10,
-                Message = "You encounter an enemy minion (Room 2)"
+                Message = "You encounter an enemy minion (Room 2)",
+                Npcs = new ObservableCollection<Npc> { GetNpcById(9003)}
             };
 
             //
@@ -106,7 +112,8 @@ namespace WPF_Test.DataLayer
                 {
                     new GameItemQuantity(GameItemByID(201), 1)
                 },
-                Message = "Welcome to the mini boss (room 6)"
+                Message = "Welcome to the mini boss (room 6)",
+                Npcs = new ObservableCollection<Npc> { GetNpcById(9002) }
             };
 
             //
@@ -151,7 +158,8 @@ namespace WPF_Test.DataLayer
                 Description = "Final Boss Room",
                 RequiredItem = 201,
                 Accessible = false,
-                Message = "Welcome to the Boss (room 9)"
+                Message = "Welcome to the Boss (room 9)",
+                Npcs = new ObservableCollection<Npc> { GetNpcById(9001) }
             };
 
             return gameMap;
@@ -172,6 +180,75 @@ namespace WPF_Test.DataLayer
                 new Armor(202, "Dark Elf Armor", 20, 500, Armor.ArmorType.Leather, 0,"This armor emanates with the power of Dark Elves", "You have gained 20 xp"),
                 new Armor(203, "Arcane Armor", 20, 500, Armor.ArmorType.Cloth, 0, "This armor emanates with the power of the Arcane", "You have gained 20 xp")
 
+            };
+        }
+        #endregion
+
+        #region NPC
+        public static List<Npc> Npcs()
+        {
+            return new List<Npc>()
+            {
+                new Enemy()
+                {
+                    Id = 9001,
+                    Name = "Guy De Lombard",
+                    Race = Character.RaceType.Human,
+                    Description = "Already has a Holy Grail",
+                    Messages = new List<string>()
+                    {
+                        "Severed heads never go out of fashion!",
+                        "Did ye just call me short?",
+                        "You can't make an omelet without killing a few people!"
+                    },
+                    SkillLevel = 10
+                },
+                new Enemy()
+                { 
+                    Id = 9002,
+                    Name = "The Taunter",
+                    Race = Character.RaceType.Human,
+                    Description = "Speaks in an outrageous French Accent",
+                    Messages = new List<string>()
+                    {
+                        "Mind your own business!",
+                        "Go and boil your bottoms, son of a silly person!",
+                        "Your mother was a hamster, and your father smelt of elderberries!"
+                    }
+                },
+                new Enemy()
+                {
+                    Id = 9003,
+                    Name = "The Black Knight",
+                    Race = Character.RaceType.Human,
+                    Description = "Will never be defeated, even if you cut all his limbs off... ",
+                    Messages = new List<string>()
+                    { 
+                        "None shall pass",
+                        "Come on then, you pansy!",
+                        "Have at you!"
+                    },
+                    SkillLevel = 2
+                },
+                new Vendor()
+                {
+                    Id = 8001,
+                    Name = "Roger",
+                    Race = Character.RaceType.Human,
+                    Description = "The Shrubber",
+                    Messages = new List<string>()
+                    {
+                        "Oh, what sad times are these when passing ruffians can say Ni at will to old ladies.",
+                        "There is a pestilence upon this land.",
+                        "Nothing is sacred. Even those who arrange and design shrubberies are under considerable economic stress at this period in history."
+                    }//,
+                    //GameItems = new ObservableCollection<GameItemQuantity>()
+                    //{
+                     //   new GameItemQuantity(GameItemByID(101), 10),
+                       // new GameItemQuantity(GameItemByID(103), 10),
+                       // new GameItemQuantity(GameItemByID(104), 10)
+                    //}
+                }
             };
         }
         #endregion

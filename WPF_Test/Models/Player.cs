@@ -15,12 +15,17 @@ namespace WPF_Test.Models
 
         #endregion
 
+        private const int DEFENDER_DAMAGE_ADJUSTMENT = 5;
+        private const int MAXIMUM_RETREAT_DAMAGE = 10;
+
         #region FIELDS
 
         private int _lives;
         private int _health;
         private int _experiencePoints;
         private int _wealth;
+        private int _skillLevel;
+        private BattleModeName _battleMode;
         private JobTitleName _jobTitle;
         private List<Location> _locationsVisited;
 
@@ -84,6 +89,12 @@ namespace WPF_Test.Models
                 OnPropertyChanged(nameof(ExperiencePoints));
             }
         }
+        public int SkillLevel
+        {
+            get { return _skillLevel; }
+            set { _skillLevel = value; }
+        }
+
         public int Wealth
         {
             get => _wealth;
@@ -195,6 +206,54 @@ namespace WPF_Test.Models
 
             UpdateInventory();
         }
+        #endregion
+
+        #region BattleMethods
+
+        public int Attack()
+        {
+            int hitPoints = random.Next(5, 25) * _skillLevel;
+
+            if (hitPoints <= 100)
+            {
+                return hitPoints;
+            }
+            else
+            {
+                return 100;
+            }
+        }
+        public int Defend()
+        {
+            int hitPoints = (random.Next(5, 25) * _skillLevel) - DEFENDER_DAMAGE_ADJUSTMENT;
+
+            if (hitPoints >= 0 && hitPoints <= 100)
+            {
+                return hitPoints;
+            }
+            else if (hitPoints > 100)
+            {
+                return 100;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        public int Retreat()
+        {
+            int hitPoints = _skillLevel * MAXIMUM_RETREAT_DAMAGE;
+
+            if (hitPoints <= 100)
+            {
+                return hitPoints;
+            }
+            else
+            {
+                return 100;
+            }
+        }
+
         #endregion
 
         #region EVENTS

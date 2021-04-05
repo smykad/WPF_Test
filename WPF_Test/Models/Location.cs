@@ -88,7 +88,10 @@ namespace WPF_Test.Models
             set { _message = value; }
         }
         public ObservableCollection<GameItemQuantity> GameItems { get; set; }
+      
+        public ObservableCollection<Npc> Npcs { get; set; }
         #endregion
+
 
 
         #region CONSTRUCTORS

@@ -19,56 +19,88 @@ namespace WPF_Test.PresentationLayer
 
         #region FIELDS
 
-        private DateTime _gameStartTime;
         private string _gameTimeDisplay;
+
+        private DateTime _gameStartTime;
         private TimeSpan _gameTime;
-        private GameItemQuantity _currentGameItem;
-
-        public GameItemQuantity CurrentGameItem
-        {
-            get { return _currentGameItem; }
-            set 
-            { 
-                _currentGameItem = value;
-                OnPropertyChanged(nameof(CurrentGameItem));
-            }
-        }
-
 
         private string _currentMessage;
 
-        public string CurrentMessage
-        {
-            get { return _currentMessage; }
-            set { _currentMessage = value; }
-        }
+        private GameItemQuantity _currentGameItem;
+        private Npc _currentNpc;
 
-
+        
         private Player _player;
-
         private Map _gameMap;
+
         private Location _currentLocation;
         private Location _northLocation, _eastLocation, _southLocation, _westLocation;
+        private string _currentLocationInformation;
+
+        private Random random = new Random();
 
         #endregion
 
         #region PROPERTIES
 
+        public string MissionTimeDisplay
+        {
+            get { return _gameTimeDisplay; }
+            set
+            {
+                _gameTimeDisplay = value;
+                OnPropertyChanged(nameof(MissionTimeDisplay));
+            }
+        }
+        public string CurrentMessage
+        {
+            get { return _currentMessage; }
+            set { _currentMessage = value; }
+        }
+        public string MessageDisplay
+        {
+            get { return _currentLocation.Message; }
+        }
+        public string CurrentLocationInformation
+        {
+            get { return _currentLocationInformation; }
+            set
+            {
+                _currentLocationInformation = value;
+                OnPropertyChanged(nameof(CurrentLocationInformation));
+            }
+        }
+        public GameItemQuantity CurrentGameItem
+        {
+            get { return _currentGameItem; }
+            set
+            {
+                _currentGameItem = value;
+                OnPropertyChanged(nameof(CurrentGameItem));
+            }
+        }
+        public Npc CurrentNpc
+        {
+            get => _currentNpc;
+            set
+            {
+                _currentNpc = value;
+                OnPropertyChanged(nameof(CurrentNpc));
+            }
+        }
         public Player Player
         {
             get { return _player; }
             set { _player = value; }
-        }
-
-        public string MessageDisplay
-        {
-            get { return _currentLocation.Message; }
         }
         public Map GameMap
         {
             get { return _gameMap; }
             set { _gameMap = value; }
         }
+
+
+        #region Locations
         public Location CurrentLocation
         {
             get { return _currentLocation; }
@@ -78,10 +110,6 @@ namespace WPF_Test.PresentationLayer
                 OnPropertyChanged(nameof(CurrentLocation));
             }
         }
-
-        //
-        // expose information about travel points from current location
-        //
         public Location NorthLocation
         {
             get { return _northLocation; }
@@ -114,7 +142,6 @@ namespace WPF_Test.PresentationLayer
                 OnPropertyChanged(nameof(HasSouthLocation));
             }
         }
-
         public Location WestLocation
         {
             get { return _westLocation; }
@@ -125,39 +152,13 @@ namespace WPF_Test.PresentationLayer
                 OnPropertyChanged(nameof(HasWestLocation));
             }
         }
-
-        public bool HasNorthLocation
-        {
-            get
-            {
-                if (NorthLocation != null)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-        //
-        // shortened code with same functionality as above
-        //
+        public bool HasNorthLocation { get { return NorthLocation != null; } }
         public bool HasEastLocation { get { return EastLocation != null; } }
         public bool HasSouthLocation { get { return SouthLocation != null; } }
         public bool HasWestLocation { get { return WestLocation != null; } }
 
-        public string MissionTimeDisplay
-        {
-            get { return _gameTimeDisplay; }
-            set
-            {
-                _gameTimeDisplay = value;
-                OnPropertyChanged(nameof(MissionTimeDisplay));
-            }
-        }
+        #endregion 
 
- 
         #endregion
 
         #region CONSTRUCTORS
@@ -186,14 +187,25 @@ namespace WPF_Test.PresentationLayer
 
         #region METHODS
 
+        #region Music
+        /// <summary>
+        /// **********************************************************
+        ///                     MUSIC PLAYER METHOD
+        /// **********************************************************
+        /// </summary>
         private static void BackgroundMusic()
         {
             var backgroundMusic = new SoundPlayer("PresentationLayer/Resources/background.wav");
             backgroundMusic.Load();
             backgroundMusic.PlayLooping();
         }
+        #endregion
+
+        #region Timer
         /// <summary>
-        /// game time event, publishes every 1 second
+        /// **********************************************************
+        ///             GAME TIMER
+        /// **********************************************************
         /// </summary>
         public void GameTimer()
         {
@@ -202,10 +214,13 @@ namespace WPF_Test.PresentationLayer
             timer.Tick += OnGameTimerTick;
             timer.Start();
         }
+        #endregion
 
+        #region Movement Methods 
         /// <summary>
-        /// calculate the available travel points from current location
-        /// game slipstreams are a mapping against the 2D array where 
+        /// **********************************************************
+        ///                     AVAILABLE TRAVEL POINTS
+        /// **********************************************************
         /// </summary>
         private void UpdateAvailableTravelPoints()
         {
@@ -283,7 +298,9 @@ namespace WPF_Test.PresentationLayer
         }
 
         /// <summary>
-        /// 
+        /// **********************************************************
+        ///                     LOCATION ACCESSABILITY
+        /// **********************************************************
         /// </summary>
         /// <param name="nextLocation">location to check accessibility</param>
         /// <returns>accessibility</returns>
@@ -301,9 +318,10 @@ namespace WPF_Test.PresentationLayer
                 return false;
             }
         }
-
         /// <summary>
-        /// player move event handler
+        /// **********************************************************
+        ///                     ON PLAYER MOVE
+        /// **********************************************************
         /// </summary>
         private void OnPlayerMove()
         {
@@ -339,9 +357,11 @@ namespace WPF_Test.PresentationLayer
             }
             OnPropertyChanged(nameof(MessageDisplay));
         }
-
+        #region MOVEMENT
         /// <summary>
-        /// travel north
+        /// **********************************************************
+        ///                     MOVE NORTH
+        /// **********************************************************
         /// </summary>
         public void MoveNorth()
         {
@@ -355,7 +375,9 @@ namespace WPF_Test.PresentationLayer
         }
 
         /// <summary>
-        /// travel east
+        /// **********************************************************
+        ///                     MOVE EAST
+        /// **********************************************************
         /// </summary>
         public void MoveEast()
         {
@@ -369,7 +391,9 @@ namespace WPF_Test.PresentationLayer
         }
 
         /// <summary>
-        /// travel south
+        /// **********************************************************
+        ///                     MOVE SOUTH
+        /// **********************************************************
         /// </summary>
         public void MoveSouth()
         {
@@ -383,7 +407,9 @@ namespace WPF_Test.PresentationLayer
         }
 
         /// <summary>
-        /// travel west
+        /// **********************************************************
+        ///                     MOVE WEST
+        /// **********************************************************
         /// </summary>
         public void MoveWest()
         {
@@ -395,11 +421,16 @@ namespace WPF_Test.PresentationLayer
                 OnPlayerMove();
             }
         }
+        #endregion
+
+        #endregion
 
         #region GAME TIME METHODS
 
         /// <summary>
-        /// running time of game
+        /// **********************************************************
+        ///                     RUNNING TIME
+        /// **********************************************************
         /// </summary>
         /// <returns></returns>
         private TimeSpan GameTime()
@@ -408,8 +439,10 @@ namespace WPF_Test.PresentationLayer
         }
 
         /// <summary>
-        /// game timer event handler
-        /// 1) update played time on window
+        /// **********************************************************
+        ///                 GAME TIMER EVENT HANDLER
+        ///             1) UPDATE PLAYED TIME ON WINDOW
+        /// **********************************************************
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -419,17 +452,25 @@ namespace WPF_Test.PresentationLayer
             MissionTimeDisplay = "Time Played " + _gameTime.ToString(@"hh\:mm\:ss");
         }
 
+        #endregion
+
+        #region INITIALIZATION
         /// <summary>
-        /// initial setup of the game session view
+        /// **********************************************************
+        ///             INITIAL SETUP OF THE GAME SESSION VIEW
+        /// **********************************************************
         /// </summary>
         private void InitializeView()
         {
             _gameStartTime = DateTime.Now;
             UpdateAvailableTravelPoints();
+            _currentLocationInformation = CurrentLocation.Description;
             Player.UpdateInventory();
             Player.CalculateWealth();
         }
+        #endregion
 
+        #region INVENTORY
         public void AddItemToInventory()
         {
             if (CurrentGameItem == null || !_currentLocation.GameItems.Contains(CurrentGameItem)) return;
@@ -488,7 +529,20 @@ namespace WPF_Test.PresentationLayer
             Player.RemoveGameItemQuantityFromInventory(CurrentGameItem);
             Player.Wealth -= armor.Value;
         }
+        #endregion
 
+        #region NPC METHODS
+        public void OnPlayerTalkTo()
+        {
+            if (CurrentNpc != null && CurrentNpc is ISpeak)
+            {
+                ISpeak speakingNpc = CurrentNpc as ISpeak;
+                CurrentLocationInformation = speakingNpc.Speak();
+            }
+        }
+        #endregion
+
+        #region FILE MENU ACTIONS
         public void QuitApplication()
         {
             Environment.Exit(0);
@@ -498,7 +552,9 @@ namespace WPF_Test.PresentationLayer
         {
             InitializeView();
         }
+        #endregion
 
+        #region PLAYER WIN/LOSE
         private void OnPlayerDies(string message)
         {
             var messagetext = message +
@@ -518,14 +574,18 @@ namespace WPF_Test.PresentationLayer
                     break;
             }
         }
+        #endregion
 
+        #region HELPER METHODS
+        private int DieRoll(int sides)
+        {
+            return random.Next(1, sides + 1);
+        }
         #endregion
 
         #endregion
 
         #region EVENTS
-
-
 
         #endregion
     }

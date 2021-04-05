@@ -200,6 +200,31 @@
                                 </DataGrid.Columns>
                             </DataGrid>
                         </TabItem>
+                        <TabItem Header="NPCs"
+                                 x:Name="NpcsInfoTabItem">
+                            <DataGrid 
+                                x:Name="LocationNpcsDataGrid"
+                                Background="DarkSeaGreen"
+                                Height="150"
+                                ItemsSource="{Binding CurrentLocation.Npcs}" 
+                                SelectedItem="{Binding CurrentNpc}"
+                                AutoGenerateColumns="False"
+                                HeadersVisibility="Column">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn 
+                                        Header="Description" 
+                                        IsReadOnly="True"                 
+                                        Binding="{Binding Information, Mode=OneWay}"
+                                        Width="*">
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style>
+                                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </TabItem>
                     </TabControl>
                     <StackPanel
                         Grid.Row="1"
