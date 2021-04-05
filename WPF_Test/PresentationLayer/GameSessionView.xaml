@@ -152,6 +152,12 @@
                             <TextBox Text="{Binding Player.ExperiencePoints}" Style="{StaticResource MainPanelTextBoxStyle}"/>
                             <Label Content="Experience" Style="{StaticResource MainPanelLabelStyle}"/>
                         </StackPanel>
+                        <Button
+                            Margin="0, 150, 0, 0"
+                            Width="100"
+                            Content="Quest Information"
+                            Click="ButtonQuest_Click"
+                            Style="{StaticResource MainPanelButtonStyle}"/>
                     </StackPanel>
                 </Border>
 

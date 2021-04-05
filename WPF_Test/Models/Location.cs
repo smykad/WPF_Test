@@ -1,26 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WPF_Test.Models
 {
     public class Location
     {
-        #region ENUMS
-
-
-        #endregion
-
         #region FIELDS
 
-        private int _id; // must be a unique value for each object
+        private int _id;
         private string _name;
         private string _description;
         private bool _accessible;
-        private int _requiredExperiencePoints;
         private int _modifiyExperiencePoints;
         private int _modifyHealth;
         private int _modifyLives;
@@ -61,12 +51,6 @@ namespace WPF_Test.Models
             set { _modifiyExperiencePoints = value; }
         }
 
-        public int RequiredExperiencePoints
-        {
-            get { return _requiredExperiencePoints; }
-            set { _requiredExperiencePoints = value; }
-        }
-
         public int ModifyHealth
         {
             get { return _modifyHealth; }
@@ -92,8 +76,6 @@ namespace WPF_Test.Models
         public ObservableCollection<Npc> Npcs { get; set; }
         #endregion
 
-
-
         #region CONSTRUCTORS
 
         public Location()
@@ -103,17 +85,12 @@ namespace WPF_Test.Models
 
         #endregion
 
-
         #region METHODS
-
-        //
-        // location is open if character has enough XP
-        //
-        public bool IsAccessibleByExperiencePoints(int playerExperiencePoints)
-        {
-            return playerExperiencePoints >= _requiredExperiencePoints ? true : false;
-        }
-
+        /// <summary>
+        /// **********************************************************
+        ///             UPDATE GAME ITEMS
+        /// **********************************************************
+        /// </summary>
         public void UpdateLocationGameItems()
         {
             var updatedLocationGameItems = new ObservableCollection<GameItemQuantity>();
@@ -130,6 +107,13 @@ namespace WPF_Test.Models
                 GameItems.Add(gameItemQuantity);
             }
         }
+
+        /// <summary>
+        /// **********************************************************
+        ///             ADD GAME ITEMS
+        /// **********************************************************
+        /// </summary>
+        /// <param name="selectedGameItemQuantity"></param>
 
         public void AddGameItemQuantityToLocation(GameItemQuantity selectedGameItemQuantity)
         {
@@ -153,6 +137,13 @@ namespace WPF_Test.Models
             UpdateLocationGameItems();
         }
 
+        /// <summary>
+        /// **********************************************************
+        ///             REMOVE GAME ITEMS
+        /// **********************************************************
+        /// </summary>
+        /// <param name="selectedGameItemQuantity"></param>
+        /// <param name="quantity"></param>
         public void RemoveGameItemQuantityFromLocation(GameItemQuantity selectedGameItemQuantity, int quantity)
         {
             var gameItemQuantity = GameItems.FirstOrDefault(i => i.GameItem.Id == selectedGameItemQuantity.GameItem.Id);
@@ -169,5 +160,6 @@ namespace WPF_Test.Models
         }
 
         #endregion
+
     }
 }

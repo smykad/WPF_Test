@@ -1,22 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WPF_Test.Models;
 using System.Windows.Threading;
 using System.Media;
-using static System.Net.Mime.MediaTypeNames;
 using System.Windows;
 
 namespace WPF_Test.PresentationLayer
 {
     public class GameSessionViewModel : ObservableObject
     {
-        #region ENUMS
-
-        #endregion
-
         #region FIELDS
 
         private string _gameTimeDisplay;
@@ -245,7 +236,7 @@ namespace WPF_Test.PresentationLayer
 
                 //
                 // location generally accessible or player has required conditions
-                // || PlayerCanAccessLocation(nextNorthLocation)
+                // 
                 if (nextNorthLocation.Accessible == true )
                 {
                     NorthLocation = nextNorthLocation;
@@ -261,7 +252,7 @@ namespace WPF_Test.PresentationLayer
 
                 //
                 // location generally accessible or player has required conditions
-                // || PlayerCanAccessLocation(nextEastLocation)
+                //
                 if (nextEastLocation.Accessible == true )
                 {
                     EastLocation = nextEastLocation;
@@ -277,7 +268,7 @@ namespace WPF_Test.PresentationLayer
 
                 //
                 // location generally accessible or player has required conditions
-                // || PlayerCanAccessLocation(nextSouthLocation)
+                //
                 if (nextSouthLocation.Accessible == true )
                 {
                     SouthLocation = nextSouthLocation;
@@ -293,7 +284,7 @@ namespace WPF_Test.PresentationLayer
 
                 //
                 // location generally accessible or player has required conditions
-                // || PlayerCanAccessLocation(nextWestLocation)
+                //
                 if (nextWestLocation.Accessible == true )
                 {
                     WestLocation = nextWestLocation;
@@ -301,27 +292,6 @@ namespace WPF_Test.PresentationLayer
             }
         }
 
-        /// <summary>
-        /// **********************************************************
-        ///                     LOCATION ACCESSABILITY
-        /// **********************************************************
-        /// </summary>
-        /// <param name="nextLocation">location to check accessibility</param>
-        /// <returns>accessibility</returns>
-        private bool PlayerCanAccessLocation(Location nextLocation)
-        {
-            //
-            // check access by experience points
-            //
-            if (nextLocation.IsAccessibleByExperiencePoints(_player.ExperiencePoints))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
         /// <summary>
         /// **********************************************************
         ///                     ON PLAYER MOVE
@@ -471,6 +441,17 @@ namespace WPF_Test.PresentationLayer
             _currentLocationInformation = CurrentLocation.Description;
             Player.UpdateInventory();
             Player.CalculateWealth();
+        }
+
+        public void QuestWindow()
+        {
+            var newVm = new QuestStatusViewModel
+            {
+
+            };
+            var questStatus = new QuestStatusView(newVm);
+            questStatus.Show();
+
         }
         #endregion
 

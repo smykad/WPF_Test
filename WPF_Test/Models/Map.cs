@@ -200,9 +200,13 @@ namespace WPF_Test.Models
 
             return westLocation;
         }
-
-
-
+        /// <summary>
+        /// **********************************************************
+        ///         OPEN LOCATION BY RELIC
+        /// **********************************************************
+        /// </summary>
+        /// <param name="relicId"></param>
+        /// <returns></returns>
         public string OpenLocationsByRelic(int relicId)
         {
             string message = "The relic did nothing.";

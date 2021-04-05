@@ -92,5 +92,10 @@ namespace WPF_Test.PresentationLayer
                 _gameSessionViewModel.OnPlayerTalkTo();
             }
         }
+
+        private void ButtonQuest_Click(object sender, RoutedEventArgs e)
+        {
+            _gameSessionViewModel.QuestWindow();
+        }
     }
 }

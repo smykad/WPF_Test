@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WPF_Test.Models
 {
@@ -129,7 +126,13 @@ namespace WPF_Test.Models
         #endregion
 
         #region METHODS
-
+        /// <summary>
+        /// **********************************************************
+        ///             HAS VISITED
+        /// **********************************************************
+        /// </summary>
+        /// <param name="location"></param>
+        /// <returns></returns>
         public bool HasVisited(Location location)
         {
             return _locationsVisited.Contains(location);
@@ -154,6 +157,18 @@ namespace WPF_Test.Models
             return $"Hello, my name is {_name} and I am {article} {_jobTitle} for the Aion Project.";
         }
 
+        public void CalculateWealth()
+        {
+            Wealth = Inventory.Sum(i => i.GameItem.Value * i.Quantity);
+        }
+
+        #region INVENTORY METHODS
+
+        /// <summary>
+        /// **********************************************************
+        ///                 UPDATE INVENTORY
+        /// **********************************************************
+        /// </summary>
         public void UpdateInventory()
         {
             Potions.Clear();
@@ -167,12 +182,13 @@ namespace WPF_Test.Models
                 if (gameItemQuantity.GameItem is Relic) Relics.Add(gameItemQuantity);
             }
         }
-
-        public void CalculateWealth()
-        {
-            Wealth = Inventory.Sum(i => i.GameItem.Value * i.Quantity);
-        }
-
+        /// <summary>
+        /// **********************************************************
+        ///                 ADD GAME ITEM
+        /// **********************************************************
+        /// </summary>
+        /// <param name="selectedGameItemQuantity"></param>
+        /// <param name="quantity"></param>
         public void AddGameItemQuantityToInventory(GameItemQuantity selectedGameItemQuantity, int quantity)
         {
             var gameItemQuantity = Inventory.FirstOrDefault(i => i.GameItem.Id == selectedGameItemQuantity.GameItem.Id);
@@ -194,6 +210,13 @@ namespace WPF_Test.Models
 
             UpdateInventory();
         }
+
+        /// <summary>
+        /// **********************************************************
+        ///             REMOVE GAME ITEM
+        /// **********************************************************
+        /// </summary>
+        /// <param name="selectedGameItemQuantity"></param>
         public void RemoveGameItemQuantityFromInventory(GameItemQuantity selectedGameItemQuantity)
         {
             var gameItemQuantity = Inventory.FirstOrDefault(i => i.GameItem.Id == selectedGameItemQuantity.GameItem.Id);
@@ -213,6 +236,7 @@ namespace WPF_Test.Models
             UpdateInventory();
         }
         #endregion
+        
 
         #region BattleMethods
 
@@ -259,6 +283,8 @@ namespace WPF_Test.Models
                 return 100;
             }
         }
+
+        #endregion
 
         #endregion
 

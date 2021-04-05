@@ -77,6 +77,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PresentationLayer\QuestStatusView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Armor.cs" />
@@ -93,6 +97,7 @@
     <Compile Include="Models\Npc.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Potion.cs" />
+    <Compile Include="Models\Quest.cs" />
     <Compile Include="Models\Relic.cs" />
     <Compile Include="Models\Vendor.cs" />
     <Compile Include="ObservableObject.cs" />
@@ -103,6 +108,10 @@
     <Compile Include="PresentationLayer\PlayerSetupView.xaml.cs">
       <DependentUpon>PlayerSetupView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PresentationLayer\QuestStatusView.xaml.cs">
+      <DependentUpon>QuestStatusView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PresentationLayer\QuestStatusViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -120,6 +129,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="DataLayer\PlayerData.json" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -141,7 +141,6 @@ namespace WPF_Test.DataLayer
                 Name = "2-2",
                 Description = "This is a vendor room before the mini boss",
                 Accessible = true,
-                RequiredExperiencePoints = 1000,
                 Message = "Welcome to the Vendor Room (room 5)",
                 GameItems = new ObservableCollection<GameItemQuantity>
                 {
@@ -222,9 +221,9 @@ namespace WPF_Test.DataLayer
                 new Potion(103, "Bonus Life Potion", 150, 0, 1, 0, "Bonus Life potion grants 1 life", "You gained a life!"),
                 new Potion(104, "XP Potion", 100, 0, 0, 100, "Bonus XP potion grants 100 xp", "You gained 100 xp"),
 
-                new Armor(201, "Dark Iron Armor", 20,  500, Armor.ArmorType.Plate, 0, "This armor emanates with the power of Dark Iron", "You have gained 20 xp"),
-                new Armor(202, "Dark Elf Armor", 20, 500, Armor.ArmorType.Leather, 0,"This armor emanates with the power of Dark Elves", "You have gained 20 xp"),
-                new Armor(203, "Arcane Armor", 20, 500, Armor.ArmorType.Cloth, 0, "This armor emanates with the power of the Arcane", "You have gained 20 xp"),
+                new Armor(201, "Dark Iron Armor", 20,  500, Armor.ArmorType.Chest, 0, "This armor emanates with the power of Dark Iron", "You have gained 20 xp"),
+                new Armor(202, "Dark Iron Helmet", 20, 500, Armor.ArmorType.Helmet, 0,"This armor emanates with the power of Dark Elves", "You have gained 20 xp"),
+                new Armor(203, "Dark Iron Cloak", 20, 500, Armor.ArmorType.Cloak, 0, "This armor emanates with the power of the Arcane", "You have gained 20 xp"),
 
                 new Relic(301, "Shrubbery", 0, 0, "Not too expensive","This shrubbery looks nice!", Relic.UseActionType.OPENLOCATION ),
                 new Relic(302, "Holy Hand Grenade of Antioch", 0, 0, "A grenade consecrated by Saint Atilla", "You can now engage the Killer Rabbit of Caerbannog", Relic.UseActionType.OPENLOCATION)

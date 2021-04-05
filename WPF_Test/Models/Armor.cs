@@ -5,9 +5,9 @@
         #region Enums
         public enum ArmorType
         {
-            Leather,
-            Cloth,
-            Plate
+            Helmet,
+            Chest,
+            Cloak
         }
         #endregion
 
