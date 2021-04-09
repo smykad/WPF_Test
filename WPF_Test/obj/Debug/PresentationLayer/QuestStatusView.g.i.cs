@@ -41,7 +41,7 @@ namespace WPF_Test.PresentationLayer {
     public partial class QuestStatusView : System.Windows.Window, System.Windows.Markup.IComponentConnector {
         
         
-        #line 88 "..\..\..\PresentationLayer\QuestStatusView.xaml"
+        #line 89 "..\..\..\PresentationLayer\QuestStatusView.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.DataGrid Quests;
         
@@ -83,7 +83,7 @@ namespace WPF_Test.PresentationLayer {
             return;
             case 2:
             
-            #line 126 "..\..\..\PresentationLayer\QuestStatusView.xaml"
+            #line 128 "..\..\..\PresentationLayer\QuestStatusView.xaml"
             ((System.Windows.Controls.Button)(target)).Click += new System.Windows.RoutedEventHandler(this.QuestStatusWindowClose_Click);
             
             #line default
