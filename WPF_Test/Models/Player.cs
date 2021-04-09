@@ -156,7 +156,7 @@ namespace WPF_Test.Models
 
             List<string> vowels = new List<string>() { "A", "E", "I", "O", "U" };
 
-            if (vowels.Contains(_jobTitle.ToString().Substring(0, 1))) ;
+            if (vowels.Contains(_jobTitle.ToString().Substring(0, 1)));
             {
                 article = "an";
             }

@@ -32,7 +32,7 @@ namespace WPF_Test.PresentationLayer
 
         private void InitializeWindowTheme()
         {
-            this.Title = "The One Ring To Rule Them All Productions";
+            this.Title = "Killer Rabit Productions";
         }
 
         private void NorthTravelButton_Click(object sender, RoutedEventArgs e)

@@ -1,4 +1,3 @@
-C:\Users\dougs\source\repos\WPF_Test\WPF_Test\obj\Debug\MainWindow.g.cs
 C:\Users\dougs\source\repos\WPF_Test\WPF_Test\obj\Debug\PresentationLayer\GameSessionView.g.cs
 C:\Users\dougs\source\repos\WPF_Test\WPF_Test\obj\Debug\PresentationLayer\PlayerSetupView.g.cs
 C:\Users\dougs\source\repos\WPF_Test\WPF_Test\obj\Debug\App.g.cs
@@ -7,7 +6,6 @@ C:\Users\dougs\source\repos\WPF_Test\WPF_Test\obj\Debug\WPF_Test_MarkupCompile.l
 C:\Users\dougs\source\repos\WPF_Test\WPF_Test\bin\Debug\WPF_Test.exe.config
 C:\Users\dougs\source\repos\WPF_Test\WPF_Test\bin\Debug\WPF_Test.exe
 C:\Users\dougs\source\repos\WPF_Test\WPF_Test\bin\Debug\WPF_Test.pdb
-C:\Users\dougs\source\repos\WPF_Test\WPF_Test\obj\Debug\MainWindow.baml
 C:\Users\dougs\source\repos\WPF_Test\WPF_Test\obj\Debug\PresentationLayer\GameSessionView.baml
 C:\Users\dougs\source\repos\WPF_Test\WPF_Test\obj\Debug\PresentationLayer\PlayerSetupView.baml
 C:\Users\dougs\source\repos\WPF_Test\WPF_Test\obj\Debug\WPF_Test.g.resources
