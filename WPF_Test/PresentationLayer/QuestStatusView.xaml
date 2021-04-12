@@ -81,7 +81,7 @@
             Margin="10"
             Grid.Column="1"
             Grid.Row="1"
-            FontSize="20"
+            FontSize="12"
             Background="#3776ab"
             Text="{Binding QuestInformation}"/>
 
@@ -91,7 +91,7 @@
             Grid.Column="1"
             Margin="10"
             AutoGenerateColumns="False"
-            FontSize="16"
+            FontSize="12"
             Background="#3776ab"
             HeadersVisibility="Column"
             ItemsSource="{Binding Quests}">

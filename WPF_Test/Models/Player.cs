@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using WPF_Test.DataLayer;
 
 namespace WPF_Test.Models
 {
@@ -24,13 +26,15 @@ namespace WPF_Test.Models
         private int _skillLevel;
         private BattleModeName _battleMode;
         private JobTitleName _jobTitle;
-        private List<Location> _locationsVisited;
 
+        public List<Npc> NpcsEngaged { get; set; }
+        public List<Location> LocationsVisited { get; set; }
         public ObservableCollection<GameItemQuantity> Inventory { get; set; }
         public ObservableCollection<GameItemQuantity> Potions { get; set; }
         public ObservableCollection<GameItemQuantity> Armor { get; set; }
         public ObservableCollection<GameItemQuantity> Relics { get; set; }
         public ObservableCollection<GameItemQuantity> Money { get; set; }
+        public ObservableCollection<Quest> Quests { get; set; }
 
 
 
@@ -63,6 +67,7 @@ namespace WPF_Test.Models
                 OnPropertyChanged(nameof(JobTitle));
             }
         }
+
 
         public int Health
         {
@@ -110,24 +115,20 @@ namespace WPF_Test.Models
             }
         }
 
-        public List<Location> LocationsVisited
-        {
-            get { return _locationsVisited; }
-            set { _locationsVisited = value; }
-        }
-
         #endregion
 
         #region CONSTRUCTORS
 
         public Player()
         {
-            _locationsVisited = new List<Location>();
+            LocationsVisited = new List<Location>();
+            NpcsEngaged = new List<Npc>();
             Potions = new ObservableCollection<GameItemQuantity>();
             Armor = new ObservableCollection<GameItemQuantity>();
             Inventory = new ObservableCollection<GameItemQuantity>();
             Relics = new ObservableCollection<GameItemQuantity>();
             Money = new ObservableCollection<GameItemQuantity>();
+            Quests = new ObservableCollection<Quest>();
         }
 
         #endregion
@@ -142,7 +143,7 @@ namespace WPF_Test.Models
         /// <returns></returns>
         public bool HasVisited(Location location)
         {
-            return _locationsVisited.Contains(location);
+            return LocationsVisited.Contains(location);
         }
 
         /// <summary>
@@ -244,8 +245,80 @@ namespace WPF_Test.Models
 
             UpdateInventory();
         }
+
+        public bool PayMerchant(int quantity)
+        {
+            var gameItemQuantity = Inventory.FirstOrDefault(i => i.GameItem.Id == 401);
+            if (gameItemQuantity != null)
+            {
+                if (gameItemQuantity.Quantity < quantity)
+                {
+                    return false;
+                }
+                else if (gameItemQuantity.Quantity == quantity)
+                {
+                    Inventory.Remove(gameItemQuantity);
+                    UpdateInventory();
+                    return true;
+                }
+                else
+                {
+                    gameItemQuantity.Quantity -= quantity;
+                    UpdateInventory();
+                    return true;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public void UpdateQuestStatus()
+        {
+            foreach (var quest in Quests.Where(q => q.Status == Quest.QuestStatus.Incomplete))
+            {
+                switch (quest)
+                {
+                    case QuestTravel travel:
+                        {
+                            if (travel.LocationsNotCompleted(LocationsVisited).Count == 0)
+                            {
+                                travel.Status = Quest.QuestStatus.Complete;
+                                ExperiencePoints += travel.ExperienceGain;
+                            }
+
+                            break;
+                        }
+                    case QuestGather gather:
+                        {
+                            if (gather.GameItemQuantitiesNotCompleted(Inventory.ToList()).Count == 0)
+                            {
+                                gather.Status = Quest.QuestStatus.Complete;
+                                ExperiencePoints += gather.ExperienceGain;
+                            }
+
+                            break;
+                        }
+                    case QuestEngage engage:
+                        {
+                            if (engage.NpcsNotEngaged(NpcsEngaged).Count == 0)
+                            {
+                                engage.Status = Quest.QuestStatus.Complete;
+                                ExperiencePoints += engage.ExperienceGain;
+                                int quantity = engage.GoldToGive;
+                                var reward = new GameItemQuantity(GameData.GameItemByID(401), quantity);
+                                AddGameItemQuantityToInventory(reward, quantity);
+                            }
+
+                            break;
+                        }
+                    default:
+                        throw new Exception("Unknown Mission Child Class");
+                }
+            }
+        }
         #endregion
-        
+
 
         #region BattleMethods
 

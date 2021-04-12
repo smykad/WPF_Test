@@ -24,7 +24,14 @@ namespace WPF_Test.PresentationLayer
         {
             _questStatusViewModel = questStatusViewModel;
             DataContext = questStatusViewModel;
+
+            IntializeWindowTheme();
             InitializeComponent();
+        }
+
+        private void IntializeWindowTheme()
+        {
+            this.Title = "Killer Rabbit Productions";
         }
 
         private void QuestStatusWindowClose_Click(object sender, RoutedEventArgs e)

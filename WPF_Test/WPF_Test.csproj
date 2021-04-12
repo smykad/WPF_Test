@@ -91,6 +91,9 @@
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Potion.cs" />
     <Compile Include="Models\Quest.cs" />
+    <Compile Include="Models\QuestEngage.cs" />
+    <Compile Include="Models\QuestGather.cs" />
+    <Compile Include="Models\QuestTravel.cs" />
     <Compile Include="Models\Relic.cs" />
     <Compile Include="Models\Vendor.cs" />
     <Compile Include="ObservableObject.cs" />

@@ -121,5 +121,13 @@ namespace WPF_Test.PresentationLayer
                 _gameSessionViewModel.OnPlayerRetreat();
             }
         }
+
+        private void BuyItemButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (LocationNpcsDataGrid.SelectedItem != null)
+            {
+                _gameSessionViewModel.BuyItem();
+            }
+        }
     }
 }

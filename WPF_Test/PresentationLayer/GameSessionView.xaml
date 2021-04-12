@@ -91,6 +91,7 @@
         </Style.Triggers>
     </Style>
         <Style x:Key="MainPanelTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Opacity" Value="50"/>
             <Setter Property="TextAlignment" Value="Center"/>
             <Setter Property="Background" Value="#3776ab"/>
             <Setter Property="Foreground" Value="#ffd343"/>
@@ -183,6 +184,7 @@
                     <Label Content="Experience" 
                            Style="{StaticResource MainPanelLabelStyle}"/>
                 </StackPanel>
+                
 
                 <Button Margin="0, 180, 0, 0" 
                         Width="100" 
@@ -249,6 +251,29 @@
                             </DataGrid.Columns>
                         </DataGrid>
                     </TabItem>
+                    <TabItem x:Name="BuyInfoTab" 
+                             Header="Buy"
+                             Style="{DynamicResource TabItemStyle1}">
+                        <DataGrid x:Name="NpcsBuyDataGrid" 
+                                  Style="{StaticResource MainPanelDataGrid}" 
+                                  Height="150" 
+                                  ItemsSource="{Binding CurrentNpc.GameItems}" 
+                                  SelectedItem="{Binding CurrentGameItem}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Name" 
+                                                    IsReadOnly="True" 
+                                                    Width="*"
+                                                    Binding="{Binding GameItem.Name}" >
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style>
+                                            <Setter Property="TextBlock.TextWrapping" 
+                                                    Value="Wrap" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
                 </TabControl>
                 <Grid Grid.Row="1">
                     <Grid.RowDefinitions>
@@ -257,12 +282,13 @@
                     </Grid.RowDefinitions>
                     <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Top">
                         <Button Margin="5" Content="Pick Up" Style="{StaticResource MainPanelButtonStyle}" Click="PickUpButton_Click"/>
+                        <Button Content="Buy" Style="{StaticResource MainPanelButtonStyle}" Click="BuyItemButton_Click"/>
                         <Button Content="Talk To" Style="{StaticResource MainPanelButtonStyle}" Click="SpeakToNpcButton_Click"/>
                         <Button Margin="5" Content="Attack" Style="{StaticResource MainPanelButtonStyle}" Click="AttackButton_Click"/>
                         <Button Content="Defend" Style="{StaticResource MainPanelButtonStyle}" Click="DefendButton_Click"/>
                         <Button Content="Retreat" Style="{StaticResource MainPanelButtonStyle}" Click="RetreatButton_Click"/>
                     </StackPanel>
-                    <Border Grid.Row="1" Margin="10" Padding="0" BorderThickness="10px" Background="#3776ab" Style="{StaticResource BorderStyle}">
+                    <Border Grid.Row="1" Margin="10" Padding="0" BorderThickness="5px" Background="#3776ab" Style="{StaticResource BorderStyle}">
                         <TextBox Height="auto" Width="auto" Margin="10" BorderThickness="0" TextWrapping="Wrap"
                                 Text="{Binding CurrentMessage, Mode=OneWay}"
                                 VerticalScrollBarVisibility="Auto" VerticalContentAlignment="top"
@@ -330,8 +356,10 @@
                 <Border Grid.Column="1"
                         Margin="0"
                         Padding="0"
-                        BorderThickness="10px"
+                        BorderThickness="5px"
                         Background="#3776ab"
+                        Opacity="100"
+                        OpacityMask="Firebrick"
                         Style="{StaticResource BorderStyle}">
                     <TextBox Height="auto" Width="auto" Margin="10" 
                              BorderThickness="0" TextWrapping="Wrap" 
@@ -381,21 +409,6 @@
                                 </DataGrid.Columns>
                             </DataGrid>
                         </TabItem>
-                        <TabItem x:Name="PlayerArmor"
-                                 Header="Armor"
-                                 Style="{DynamicResource TabItemStyle1}">
-                            <DataGrid x:Name="ArmorData"
-                                      Style="{StaticResource MainPanelDataGrid}"
-                                      ItemsSource="{Binding Player.Armor}"
-                                      SelectedItem="{Binding CurrentGameItem}">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Width="Auto"
-                                                        Binding="{Binding GameItem.Name, Mode=OneWay}"
-                                                        Header="Name"
-                                                        IsReadOnly="True"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </TabItem>
                         <TabItem Header="Relics"
                                  x:Name="RelicsTabItem"
                                  Style="{DynamicResource TabItemStyle1}">
@@ -432,9 +445,6 @@
                                                         IsReadOnly="True"
                                                         Width="Auto"
                                                         Binding="{Binding Quantity, Mode=OneWay}"/>
-                                    <DataGridTextColumn Header="Value"
-                                                        Binding="{Binding GameItem.Value, Mode=OneWay}"
-                                                        Width="Auto"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </TabItem>

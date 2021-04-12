@@ -6,13 +6,21 @@ namespace WPF_Test.PresentationLayer
     public class QuestStatusViewModel : ObservableObject
     {
         #region Fields
-        private string _questInformation;
-        #endregion
-        #region Properites
 
-        public List<Quest> Quests {get; set;}
+        private string _questInformation;
+
         #endregion
-        #region Methods        
+
+        #region Properties
+
+        /// <summary>
+        /// Gets and Sets the List of Quests
+        /// </summary>
+        public List<Quest> Quests { get; set; }
+
+        /// <summary>
+        /// Gets and Sets the Quest Information
+        /// </summary>
         public string QuestInformation
         {
             get => _questInformation;
@@ -22,6 +30,7 @@ namespace WPF_Test.PresentationLayer
                 OnPropertyChanged(nameof(QuestInformation));
             }
         }
+
         #endregion
     }
 }

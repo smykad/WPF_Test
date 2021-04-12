@@ -27,6 +27,12 @@ namespace WPF_Test.DataLayer
                 Inventory = new ObservableCollection<GameItemQuantity>()
                 {
                     new GameItemQuantity(GameItemByID(101), 1)
+                },
+                Quests = new ObservableCollection<Quest>()
+                {
+                    QuestById(1),
+                    QuestById(2),
+                    QuestById(3)
                 }
             };
         }
@@ -53,6 +59,25 @@ namespace WPF_Test.DataLayer
         public static Npc GetNpcById(int id)
         {
             return Npcs().FirstOrDefault(i => i.Id == id);
+        }
+        public static Quest QuestById(int id)
+        {
+            return Quests().FirstOrDefault(q => q.Id == id);
+        }
+
+        public static Location LocationById(int id)
+        {
+            List<Location> locations = new List<Location>();
+
+            foreach (Location location in GameMap().MapLocations)
+            {
+                if (location != null)
+                {
+                    locations.Add(location);
+                }
+            }
+
+            return locations.FirstOrDefault(x => x.Id == id);
         }
         public static Map GameMap()
         {
@@ -109,7 +134,7 @@ namespace WPF_Test.DataLayer
                 Accessible = true,
                 ModifiyExperiencePoints = 10,
                 Message = "This is the third room (Room 3)",
-                Npcs = new ObservableCollection<Npc> { GetNpcById(9004)}
+                Npcs = new ObservableCollection<Npc> { GetNpcById(9002)}
             };
 
             //
@@ -127,12 +152,8 @@ namespace WPF_Test.DataLayer
                 Description = "This is a mini boss",
                 Accessible = false,
                 RequiredRelicId = 301,
-                GameItems = new ObservableCollection<GameItemQuantity>
-                {
-                    new GameItemQuantity(GameItemByID(201), 1)
-                },
                 Message = "Welcome to the mini boss (room 6)",
-                Npcs = new ObservableCollection<Npc> { GetNpcById(9002) }
+                Npcs = new ObservableCollection<Npc> { GetNpcById(9004) }
             };
             // ***********************
             // *  Floor II: Room II  *
@@ -144,10 +165,6 @@ namespace WPF_Test.DataLayer
                 Description = "This is a vendor room before the mini boss",
                 Accessible = true,
                 Message = "Welcome to the Vendor Room (room 5)",
-                GameItems = new ObservableCollection<GameItemQuantity>
-                {
-                    new GameItemQuantity(GameItemByID(301), 1 )
-                },
                 Npcs = new ObservableCollection<Npc> { GetNpcById(8001)}
             };
             // ***********************
@@ -177,11 +194,7 @@ namespace WPF_Test.DataLayer
                 Accessible = false,
                 RequiredRelicId = 301,
                 Message = "Welcome to the final boss (room 7)",
-                Npcs = new ObservableCollection<Npc> { GetNpcById(8001)},
-                GameItems = new ObservableCollection<GameItemQuantity> 
-                { 
-                    new GameItemQuantity(GameItemByID(302), 1)
-                }
+                Npcs = new ObservableCollection<Npc> { GetNpcById(8002)}
 
             };
             // ***********************
@@ -193,7 +206,7 @@ namespace WPF_Test.DataLayer
                 Name = "3-2",
                 Description = "Safe room before final boss, health restored to full",
                 Accessible = false,
-                RequiredRelicId = 301,
+                RequiredRelicId = 302,
                 Message = "Beware, the final boss is to the east (room 8)"
             };
             // ***********************
@@ -224,12 +237,8 @@ namespace WPF_Test.DataLayer
                 new Potion(103, "Bonus Life Potion", 150, 0, 0, 1, "grants 1 life", "You gained a life!"),
                 new Potion(104, "XP Potion", 100, 0, 0, 100, "grants 100 xp", "You gained 100 xp"),
 
-                new Armor(201, "Dark Iron Armor", 20,  500, Armor.ArmorType.Chest, 0, "is an armor emanates with the power of Dark Iron", "You have gained 20 xp"),
-                new Armor(202, "Dark Iron Helmet", 20, 500, Armor.ArmorType.Helmet, 0,"This armor emanates with the power of Dark Elves", "You have gained 20 xp"),
-                new Armor(203, "Dark Iron Cloak", 20, 500, Armor.ArmorType.Cloak, 0, "This armor emanates with the power of the Arcane", "You have gained 20 xp"),
-
-                new Relic(301, "Shrubbery", 0, 0, "is not too expensive","This shrubbery looks nice!", Relic.UseActionType.OPENLOCATION ),
-                new Relic(302, "Holy Hand Grenade of Antioch", 0, 0, "is a grenade consecrated by Saint Atilla", "You can now engage the Killer Rabbit of Caerbannog", Relic.UseActionType.OPENLOCATION),
+                new Relic(301, "Shrubbery", 0, 100, "is not too expensive","This shrubbery looks nice!", Relic.UseActionType.OPENLOCATION ),
+                new Relic(302, "Holy Hand Grenade of Antioch", 0, 100, "is a grenade consecrated by Saint Atilla", "You can now engage the Killer Rabbit of Caerbannog", Relic.UseActionType.OPENLOCATION),
 
                 new Money(401, "Gold Coin", 0, 25, "A shiny gold coin", "You throw a gold coin to your Shrubber", Money.MoneyType.GOLD),
                 new Money(402, "Gold Coin", 0, 25, "A shiny silver coin", "You throw a silver coin to your Shrubber", Money.MoneyType.SILVER)
@@ -307,13 +316,11 @@ namespace WPF_Test.DataLayer
                         "Oh, what sad times are these when passing ruffians can say Ni at will to old ladies.",
                         "There is a pestilence upon this land.",
                         "Nothing is sacred. Even those who arrange and design shrubberies are under considerable economic stress at this period in history."
-                    }//,
-                    //GameItems = new ObservableCollection<GameItemQuantity>()
-                    //{
-                     //   new GameItemQuantity(GameItemByID(101), 10),
-                       // new GameItemQuantity(GameItemByID(103), 10),
-                       // new GameItemQuantity(GameItemByID(104), 10)
-                    //}
+                    },
+                    GameItems = new ObservableCollection<GameItemQuantity>()
+                    {
+                        new GameItemQuantity(GameItemByID(301), 1)
+                    }
                 },
                 new Vendor()
                 {
@@ -326,9 +333,101 @@ namespace WPF_Test.DataLayer
                         "And the Lord spake, saying, 'First shalt thou take out the Holy Pin'",
                         "Then, shalt thou count to three, no more, no less",
                         "Three shall be the number thou shalt count, and the number of the counting shall be three"
+                    },
+                    GameItems = new ObservableCollection<GameItemQuantity>()
+                    {
+                        new GameItemQuantity(GameItemByID(302), 1)
                     }
                 }
                 
+            };
+        }
+        #endregion
+
+        #region QUESTS
+
+        public static List<Quest> Quests()
+        {
+            return new List<Quest>()
+            {
+                new QuestEngage()
+                {
+                    Id = 1,
+                    GoldToGive = 100,
+                    Name = "The knighs of Ni",
+                    Description = "Talk to these Npcs in order to obtain gold for a shrubbery.",
+
+                    Status = Quest.QuestStatus.Incomplete,
+
+                    RequiredNpcs = new List<Npc>()
+                    {
+                        GetNpcById(9003),
+                        GetNpcById(9002),
+                        GetNpcById(8001)
+                    },
+
+                    ExperienceGain = 150
+                },
+
+                new QuestEngage()
+                {
+                    Id = 2,
+                    GoldToGive = 100,
+                    Name = "Holy Hand Grenade!",
+                    Description = "Engage the Knights who Say Ni and talk to Brother Maynard",
+
+                    Status = Quest.QuestStatus.Incomplete,
+
+                    RequiredNpcs = new List<Npc>()
+                    {
+                        GetNpcById(9004),
+                        GetNpcById(8002)
+                    }
+                },
+
+                new QuestTravel()
+                {
+                    Id = 3,
+
+                    Name = "Explore the Map",
+                    
+                    Description = "Travel to every location in the game",
+
+                    Status = Quest.QuestStatus.Incomplete,
+
+                    RequiredLocations = new List<Location>()
+                    {
+                        LocationById(2),
+                        LocationById(3),
+                        LocationById(4),
+                        LocationById(5),
+                        LocationById(6),
+                        LocationById(7),
+                        LocationById(8),
+                        LocationById(9)
+                    },
+
+                    ExperienceGain = 250
+                    
+                },
+
+                new QuestGather()
+                {
+                    Id = 4,
+
+                    Name = "Quest for the Holy Grail",
+
+                    Description = "Find the relics required to face the final boss",
+
+                    Status = Quest.QuestStatus.Incomplete,
+
+                    RequiredGameItemQuantities = new List<GameItemQuantity>()
+                    {
+                        new GameItemQuantity(GameItemByID(301), 1),
+                        new GameItemQuantity(GameItemByID(302), 1)
+                    }
+                }
+
             };
         }
         #endregion

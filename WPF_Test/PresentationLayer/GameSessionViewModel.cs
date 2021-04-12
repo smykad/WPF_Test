@@ -3,6 +3,9 @@ using WPF_Test.Models;
 using System.Windows.Threading;
 using System.Media;
 using System.Windows;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text;
 
 namespace WPF_Test.PresentationLayer
 {
@@ -17,8 +20,10 @@ namespace WPF_Test.PresentationLayer
 
         private string _currentMessage;
 
+
         private GameItemQuantity _currentGameItem;
         private Npc _currentNpc;
+
 
         
         private Player _player;
@@ -335,6 +340,7 @@ namespace WPF_Test.PresentationLayer
                 CurrentLocation = _gameMap.CurrentLocation;
                 UpdateAvailableTravelPoints();
                 OnPlayerMove();
+                Player.UpdateQuestStatus();
             }
         }
 
@@ -351,6 +357,7 @@ namespace WPF_Test.PresentationLayer
                 CurrentLocation = _gameMap.CurrentLocation;
                 UpdateAvailableTravelPoints();
                 OnPlayerMove();
+                Player.UpdateQuestStatus();
             }
         }
 
@@ -367,6 +374,7 @@ namespace WPF_Test.PresentationLayer
                 CurrentLocation = _gameMap.CurrentLocation;
                 UpdateAvailableTravelPoints();
                 OnPlayerMove();
+                Player.UpdateQuestStatus();
             }
         }
 
@@ -383,6 +391,7 @@ namespace WPF_Test.PresentationLayer
                 CurrentLocation = _gameMap.CurrentLocation;
                 UpdateAvailableTravelPoints();
                 OnPlayerMove();
+                Player.UpdateQuestStatus();
             }
         }
         #endregion
@@ -431,17 +440,6 @@ namespace WPF_Test.PresentationLayer
             Player.UpdateInventory();
             Player.CalculateWealth();
         }
-
-        public void QuestWindow()
-        {
-            var newVm = new QuestStatusViewModel
-            {
-
-            };
-            var questStatus = new QuestStatusView(newVm);
-            questStatus.Show();
-
-        }
         #endregion
 
         #region INVENTORY
@@ -470,10 +468,29 @@ namespace WPF_Test.PresentationLayer
         {
             Player.Wealth += gameItemQuantity.GameItem.Value;
             CurrentMessage = $"You picked up {gameItemQuantity.GameItem.Name}, it {gameItemQuantity.GameItem.Description}";
+            Player.UpdateQuestStatus();
         }
         private void OnPlayerPutDown(GameItemQuantity gameItemQuantity)
         {
             Player.Wealth -= gameItemQuantity.GameItem.Value;
+        }
+        public void BuyItem()
+        {
+            if (CurrentGameItem != null && _currentNpc.GameItems.Contains(CurrentGameItem))
+            {
+                GameItemQuantity selectGameItemQuantity = CurrentGameItem;
+                if (Player.PayMerchant(selectGameItemQuantity.GameItem.Value))
+                {
+                    Player.AddGameItemQuantityToInventory(selectGameItemQuantity, 1);
+                    _currentNpc.RemoveGameItemQuantityFromInventory(selectGameItemQuantity);
+                    OnPlayerPutDown(selectGameItemQuantity);
+                }
+                else
+                {
+                    CurrentMessage = "Sorry, you do not have enough Gold for that!";
+                }
+
+            }
         }
 
         public void OnUseGameItem()
@@ -547,7 +564,6 @@ namespace WPF_Test.PresentationLayer
         {
             CurrentMessage = armor.UseMessage;
             Player.ExperiencePoints += armor.XpGain;
-            Player.RemoveGameItemQuantityFromInventory(CurrentGameItem);
             Player.Wealth -= armor.Value;
         }
         #endregion
@@ -559,6 +575,8 @@ namespace WPF_Test.PresentationLayer
             {
                 ISpeak speakingNpc = CurrentNpc as ISpeak;
                 CurrentMessage = speakingNpc.Speak();
+                Player.NpcsEngaged.Add(CurrentNpc);
+                Player.UpdateQuestStatus();
             }
         }
         #endregion
@@ -729,6 +747,141 @@ namespace WPF_Test.PresentationLayer
         {
             return random.Next(1, sides + 1);
         }
+        #endregion
+
+        #region QUESTS
+        private string GenerateQuestTravelDetail(QuestTravel quest)
+        {
+            var sb = new StringBuilder();
+            sb.Clear();
+
+            if (quest.Status != Quest.QuestStatus.Incomplete) return sb.ToString();
+            sb.AppendLine("Locations yet to visit");
+            foreach (var location in quest.LocationsNotCompleted(Player.LocationsVisited))
+            {
+                sb.Append(location.Name + ", ");
+            }
+
+            return sb.ToString();
+        }
+
+        private string GenerateQuestEngageDetail(QuestEngage quest)
+        {
+            var sb = new StringBuilder();
+            sb.Clear();
+
+            if (quest.Status != Quest.QuestStatus.Incomplete) return sb.ToString();
+            sb.AppendLine("NPC's yet to Engage");
+            foreach (var npc in quest.NpcsNotEngaged(Player.NpcsEngaged))
+            {
+                sb.Append(npc.Name + ", ");
+            }
+
+
+            return sb.ToString();
+        }
+
+        private string GenerateQuestGatherDetail(QuestGather quest)
+        {
+            var sb = new StringBuilder();
+            sb.Clear();
+
+            if (quest.Status != Quest.QuestStatus.Incomplete) return sb.ToString();
+            sb.AppendLine("Treasures yet to be found");
+            foreach (var gameItemQuantity in quest.GameItemQuantitiesNotCompleted(Player.Inventory.ToList()))
+            {
+                var quantityInInventory = 0;
+                var gameItemQuantityGathered =
+                    Player.Inventory.FirstOrDefault(x => x.GameItem.Id == gameItemQuantity.GameItem.Id);
+                if (gameItemQuantityGathered != null)
+                {
+                    quantityInInventory = gameItemQuantityGathered.Quantity;
+                }
+
+                sb.Append(Tab + gameItemQuantity.GameItem.Name);
+                sb.AppendLine($" ({gameItemQuantity.Quantity - quantityInInventory})");
+            }
+
+            return sb.ToString();
+        }
+
+        private string GenerateQuestStatusInformation()
+        {
+            double totalQuests = Player.Quests.Count;
+            double questsCompleted = Player.Quests.Count(q => q.Status == Quest.QuestStatus.Complete);
+
+            var percentQuestsCompleted = (int)((questsCompleted / totalQuests) * 100);
+            var questStatusInformation = $"Quests Complete: {percentQuestsCompleted}%" + NewLine;
+
+            if (percentQuestsCompleted == 0)
+            {
+                questStatusInformation +=
+                    "Looks like you have just starting on your quest for the Holy Grail!";
+            }
+            else if (percentQuestsCompleted <= 25)
+            {
+                questStatusInformation += "You've completed one of your quests!";
+            }
+            else if (percentQuestsCompleted <= 50)
+            {
+                questStatusInformation += "You're half way there!";
+            }
+            else if (percentQuestsCompleted <= 75)
+            {
+                questStatusInformation += "Only one more quest to go!";
+            }
+            else if (percentQuestsCompleted == 100)
+            {
+                questStatusInformation +=
+                    "Congratulations! You have completed all the quests!";
+            }
+
+            return questStatusInformation;
+        }
+
+        private QuestStatusViewModel InitializeQuestStatusViewModel()
+        {
+            var questStatusViewModel = new QuestStatusViewModel
+            {
+                QuestInformation = GenerateQuestStatusInformation(),
+                Quests = new List<Quest>(Player.Quests)
+            };
+
+
+            foreach (var quest in questStatusViewModel.Quests)
+            {
+                switch (quest)
+                {
+                    case QuestTravel travel:
+                        travel.StatusDetail = GenerateQuestTravelDetail(travel);
+                        break;
+                    case QuestEngage engage:
+                        engage.StatusDetail = GenerateQuestEngageDetail(engage);
+                        break;
+                    case QuestGather gather:
+                        gather.StatusDetail = GenerateQuestGatherDetail(gather);
+                        break;
+                }
+            }
+
+            return questStatusViewModel;
+        }
+
+
+        public void QuestWindow()
+        {
+            var questStatus = new QuestStatusView(InitializeQuestStatusViewModel());
+            questStatus.Show();
+        }
+
+        #region Constants
+
+        private const string Tab = "\t";
+        private const string NewLine = "\n";
+
+        #endregion
+
+
         #endregion
 
         #endregion
