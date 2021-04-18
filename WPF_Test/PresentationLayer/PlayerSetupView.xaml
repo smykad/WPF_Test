@@ -90,7 +90,7 @@
     <Grid>
         
             <StackPanel
-            Width="225"
+            Width="275"
             Grid.Column="0"
             Orientation="Vertical"
             HorizontalAlignment="Center">
@@ -112,7 +112,7 @@
                     Margin="0, 0, 50, 5"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right">
-                    <Label Content="Race" Style="{StaticResource MainPanelLabelStyle}"/>
+                    <Label Content="Favorite Color" Style="{StaticResource MainPanelLabelStyle}"/>
                     <ComboBox 
                         Name="RaceComboBox"
                         SelectedIndex="0"

@@ -12,9 +12,9 @@ namespace WPF_Test.Models
 
         public enum RaceType
         {
-            Human,
-            Dwarf,
-            Elf
+            Blue,
+            Red,
+            Yellow
         }
 
         #endregion
@@ -83,7 +83,7 @@ namespace WPF_Test.Models
 
         public virtual string DefaultGreeting()
         {
-            return $"Hello, my name is {_name} and I am a {_race}.";
+            return $"Hello, my name is {_name} and my favorite color is {_race}.";
         }
 
         #endregion

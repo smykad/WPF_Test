@@ -20,7 +20,7 @@ namespace WPF_Test.Models
 
 
         #region PROPERTIES
-
+        
         public string Name
         {
             get { return _name; }

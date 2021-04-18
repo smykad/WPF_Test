@@ -15,8 +15,18 @@
 
 <Window.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
-    <Style x:Key="TabItemStyle1" TargetType="{x:Type TabItem}">
-        <Setter Property="Template">
+        <Style x:Key="HeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#3776AB" />
+            <Setter Property="Foreground" Value="#ffd343" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="MinWidth" Value="0" />
+            <Setter Property="MinHeight" Value="30" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        <Style x:Key="TabItemStyle1" TargetType="{x:Type TabItem}">
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabItem}">
                     <Border x:Name="Border" BorderThickness="1,1,1,0" CornerRadius="5,5,0,0"
@@ -116,9 +126,11 @@
         </Style>
     </Window.Resources>
     
+
     <Grid>
-        <Grid Margin="10">
+        <Grid Margin="0 0 0 10">
             <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
@@ -127,7 +139,19 @@
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Row="0"  
+            <DockPanel Grid.ColumnSpan="3">
+                <Menu DockPanel.Dock="Top">
+                    <MenuItem Header="_File">
+                        <MenuItem Click="Button_Click" Header="_Close" />
+                        <MenuItem Click="RestartMenuItem_OnClick" Header="_Restart" />
+                    </MenuItem>
+                    <MenuItem Header="Help">
+                        <MenuItem Click="HelpMenuItem_OnClick" Header="_Help" />
+                    </MenuItem>
+                </Menu>
+                <StackPanel />
+            </DockPanel>
+            <StackPanel Grid.Row="1"  
                         Grid.Column="0" 
                         Margin="10" 
                         Orientation="Vertical">
@@ -140,9 +164,16 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" 
                             HorizontalAlignment="Left">
+                    <TextBox Text="{Binding Player.JobTitle}" 
+                             Style="{StaticResource MainPanelTextBoxStyle}"/>
+                    <Label Content="Role" 
+                           Style="{StaticResource MainPanelLabelStyle}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Left">
                     <TextBox Text="{Binding Player.Race}" 
                              Style="{StaticResource MainPanelTextBoxStyle}"/>
-                    <Label Content="Race" 
+                    <Label Content="Favorite Color" 
                            Style="{StaticResource MainPanelLabelStyle}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" 
@@ -184,15 +215,21 @@
                     <Label Content="Experience" 
                            Style="{StaticResource MainPanelLabelStyle}"/>
                 </StackPanel>
-                
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Left">
+                    <TextBox Text="{Binding Player.SkillLevel}" 
+                             Style="{StaticResource MainPanelTextBoxStyle}"/>
+                    <Label Content="Skill" 
+                           Style="{StaticResource MainPanelLabelStyle}"/>
+                </StackPanel>
 
-                <Button Margin="0, 180, 0, 0" 
+                <Button Margin="0, 100, 0, 0" 
                         Width="100" 
                         Content="Quest Information" 
                         Click="ButtonQuest_Click" Style="{StaticResource MainPanelButtonStyle}"/>
             </StackPanel>
 
-            <Grid Grid.Row="0" Grid.Column="1">
+            <Grid Grid.Row="1" Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
@@ -208,7 +245,8 @@
                                   Style="{StaticResource MainPanelDataGrid}" 
                                   Height="150" 
                                   ItemsSource="{Binding CurrentLocation.GameItems}" 
-                                  SelectedItem="{Binding CurrentGameItem}">
+                                  SelectedItem="{Binding CurrentGameItem}"
+                                  ColumnHeaderStyle="{StaticResource HeaderStyle}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Description" 
                                                     IsReadOnly="True" 
@@ -230,12 +268,14 @@
                     </TabItem>
                     <TabItem x:Name="NpcsInfoTabItem" 
                              Header="NPCs"
-                             Style="{DynamicResource TabItemStyle1}">
+                             Style="{DynamicResource TabItemStyle1}"
+                             >
                         <DataGrid x:Name="LocationNpcsDataGrid" 
                                   Style="{StaticResource MainPanelDataGrid}" 
                                   Height="150" 
                                   ItemsSource="{Binding CurrentLocation.Npcs}" 
-                                  SelectedItem="{Binding CurrentNpc}">
+                                  SelectedItem="{Binding CurrentNpc}"
+                                  ColumnHeaderStyle="{StaticResource HeaderStyle}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Description" 
                                                     IsReadOnly="True" 
@@ -258,7 +298,8 @@
                                   Style="{StaticResource MainPanelDataGrid}" 
                                   Height="150" 
                                   ItemsSource="{Binding CurrentNpc.GameItems}" 
-                                  SelectedItem="{Binding CurrentGameItem}">
+                                  SelectedItem="{Binding CurrentGameItem}"
+                                  ColumnHeaderStyle="{StaticResource HeaderStyle}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Name" 
                                                     IsReadOnly="True" 
@@ -297,7 +338,7 @@
                 </Grid>
             </Grid>
 
-            <StackPanel Grid.Row="0" Grid.Column="2">
+            <StackPanel Grid.Row="1" Grid.Column="2">
                 <!--L,T,R,B -->
                 <Border Grid.Column="1" Margin="0, 5, 0, 0" Height="175" Width="190" Padding="0" Background="#3776ab" BorderThickness="3" Style="{StaticResource BorderStyle}">
                     <TextBox Height="100" Width="100" Margin="10" Background="#3776ab" BorderThickness="0" TextWrapping="Wrap"
@@ -336,10 +377,22 @@
                             Visibility="{Binding HasSouthLocation, Converter={StaticResource BooleanToVisibility}}"
                             Click="SouthTravelButton_Click"/>
                 </Grid>
+                
+                    
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            Margin="0 15 0 0">
+                        <Button Content="Drop"
+                                Style="{StaticResource MainPanelButtonStyle}"
+                                Click="PutDownButton_Click"/>
+                        <Button Content="Use"
+                                Style="{StaticResource MainPanelButtonStyle}"
+                                Click="UseButton_Click"/>
+                </StackPanel>
             
             </StackPanel>
 
-            <Grid Grid.Row="1" Grid.ColumnSpan="3" Margin="5">
+            <Grid Grid.Row="2" Grid.ColumnSpan="3" Margin="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="2*"/>
@@ -372,37 +425,27 @@
                     <Label Content="{Binding MissionTimeDisplay}"
                            HorizontalAlignment="Center"
                            Style="{StaticResource MainPanelLabelStyle}"/>
-                    <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="Center"
-                                Margin="0">
-                        <Button Content="Drop"
-                                Style="{StaticResource MainPanelButtonStyle}"
-                                Click="PutDownButton_Click"/>
-                        <Button Content="Use"
-                                Style="{StaticResource MainPanelButtonStyle}"
-                                Click="UseButton_Click"/>
-                    </StackPanel>
+                    
                     <!--ltrb-->
                     <TabControl Margin="15 5 5 0"
                                 x:Name="PlayerInfoTab"
-                                Background="#3776ab">
+                                Background="#3776ab"
+                                Height="150">
                         <TabItem x:Name="PlayerPotions"
                                  Header="Potions"
                                  Style="{DynamicResource TabItemStyle1}">
                             <DataGrid x:Name="PotionsData"
+                                      Height="Auto"
                                       Style="{StaticResource MainPanelDataGrid}"                                       
                                       ItemsSource="{Binding Player.Potions}"
-                                      SelectedItem="{Binding CurrentGameItem}">
+                                      SelectedItem="{Binding CurrentGameItem}"
+                                      ColumnHeaderStyle="{StaticResource HeaderStyle}">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Width="2*" 
+                                    <DataGridTextColumn Width="4*" 
                                                         Binding="{Binding GameItem.Name, Mode=OneWay}"
                                                         Header="Name"
                                                         IsReadOnly="True"/>
                                     <DataGridTextColumn Width="*"
-                                                        Binding="{Binding GameItem.Value, Mode=OneWay}"
-                                                        Header="Value"
-                                                        IsReadOnly="True" />
-                                    <DataGridTextColumn Width="1.2*"
                                                         Binding="{Binding Quantity, Mode=OneWay}"
                                                         Header="QTY"
                                                         IsReadOnly="True" />
@@ -415,35 +458,39 @@
                             <DataGrid x:Name="RelicsDataGrid"
                                       Style="{StaticResource MainPanelDataGrid}"
                                       ItemsSource="{Binding Player.Relics}"
-                                      SelectedItem="{Binding CurrentGameItem}">
+                                      SelectedItem="{Binding CurrentGameItem}"
+                                      ColumnHeaderStyle="{StaticResource HeaderStyle}"
+                                      Height="Auto">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Name"
                                                         Binding="{Binding GameItem.Name, Mode=OneWay}"
-                                                        Width="*"/>
+                                                        Width="4*"/>
                                     <DataGridTextColumn Header="Qty"
                                                         IsReadOnly="True"
-                                                        Width="Auto"
+                                                        Width="*"
                                                         Binding="{Binding Quantity, Mode=OneWay}"/>
-                                    <DataGridTextColumn Header="Value"
-                                                        Binding="{Binding GameItem.Value, Mode=OneWay}"
-                                                        Width="Auto"/>
+                                    
                                 </DataGrid.Columns>
                             </DataGrid>
                         </TabItem>
                         <TabItem Style="{DynamicResource TabItemStyle1}"
                                  Header="Money"
-                                 x:Name="MoneyTabItem">
+                                 x:Name="MoneyTabItem"
+                                 >
                             <DataGrid x:Name="MoneyDataGrid"
                                       Style="{StaticResource MainPanelDataGrid}"
                                       ItemsSource="{Binding Player.Money}"
-                                      SelectedItem="{Binding CurrentGameItem}">
+                                      SelectedItem="{Binding CurrentGameItem}"
+                                      ColumnHeaderStyle="{StaticResource HeaderStyle}"
+                                      Height="Auto"
+                                      FontSize="10">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Name"
                                                         Binding="{Binding GameItem.Name, Mode=OneWay}"
-                                                        Width="*"/>
+                                                        Width="4*"/>
                                     <DataGridTextColumn Header="Qty"
                                                         IsReadOnly="True"
-                                                        Width="Auto"
+                                                        Width="*"
                                                         Binding="{Binding Quantity, Mode=OneWay}"/>
                                 </DataGrid.Columns>
                             </DataGrid>

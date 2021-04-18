@@ -11,6 +11,15 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
+        <Style x:Key="HeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#3776AB" />
+            <Setter Property="Foreground" Value="#ffd343" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="MinWidth" Value="0" />
+            <Setter Property="MinHeight" Value="30" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
         <Style x:Key="MainPanelButtonStyle" TargetType="Button">
             <Setter Property="Margin" Value="10,0,10,0"/>
             <Setter Property="Width" Value="75"/>
@@ -94,7 +103,8 @@
             FontSize="12"
             Background="#3776ab"
             HeadersVisibility="Column"
-            ItemsSource="{Binding Quests}">
+            ItemsSource="{Binding Quests}"
+            ColumnHeaderStyle="{StaticResource HeaderStyle}">
             <DataGrid.Columns>
                 <DataGridTextColumn
                     Width="*"

@@ -129,5 +129,15 @@ namespace WPF_Test.PresentationLayer
                 _gameSessionViewModel.BuyItem();
             }
         }
+
+        private void RestartMenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            _gameSessionViewModel.ResetPlayer();
+        }
+
+        private void HelpMenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            _gameSessionViewModel.Help();
+        }
     }
 }

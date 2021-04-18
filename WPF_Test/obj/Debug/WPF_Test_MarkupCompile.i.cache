@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\dougs\source\repos\WPF_Test\WPF_Test\App.xaml
-3960981886
+4-1786307311
 1694971917
-34776883219
+35885521196
 13-1505183044
-PresentationLayer\GameSessionView.xaml;PresentationLayer\PlayerSetupView.xaml;PresentationLayer\QuestStatusView.xaml;
+PresentationLayer\GameSessionView.xaml;PresentationLayer\HelpWindow.xaml;PresentationLayer\PlayerSetupView.xaml;PresentationLayer\QuestStatusView.xaml;
 
 True
 

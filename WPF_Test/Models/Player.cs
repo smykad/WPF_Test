@@ -10,12 +10,16 @@ namespace WPF_Test.Models
     {
         #region ENUMS
 
-        public enum JobTitleName { Warrior, Archer, Wizard }
+        public enum JobTitleName { Patsy, Knight, King }
 
         #endregion
 
+        #region CONSTANTS
+                
         private const int DEFENDER_DAMAGE_ADJUSTMENT = 5;
         private const int MAXIMUM_RETREAT_DAMAGE = 10;
+        
+        #endregion
 
         #region FIELDS
 
@@ -23,6 +27,7 @@ namespace WPF_Test.Models
         private int _health;
         private int _experiencePoints;
         private int _wealth;
+        
         private int _skillLevel;
         private BattleModeName _battleMode;
         private JobTitleName _jobTitle;
@@ -102,7 +107,11 @@ namespace WPF_Test.Models
         public int SkillLevel
         {
             get { return _skillLevel; }
-            set { _skillLevel = value; }
+            set 
+            { 
+                _skillLevel = value;
+                OnPropertyChanged(nameof(SkillLevel));
+            }
         }
 
         public int Wealth
@@ -148,7 +157,6 @@ namespace WPF_Test.Models
 
         /// <summary>
         /// override the default greeting in the Character class to include the job title
-        /// set the proper article based on the job title
         /// </summary>
         /// <returns>default greeting</returns>
         public override string DefaultGreeting()
@@ -162,7 +170,7 @@ namespace WPF_Test.Models
                 article = "an";
             }
 
-            return $"Hello, my name is {_name} and I am {article} {_jobTitle} for the Aion Project.";
+            return $"Hello {_name}, I see you have chosen to be {article} {_jobTitle} and that your favorite color is {_race}.";
         }
 
         public void CalculateWealth()
@@ -308,6 +316,7 @@ namespace WPF_Test.Models
                                 int quantity = engage.GoldToGive;
                                 var reward = new GameItemQuantity(GameData.GameItemByID(401), quantity);
                                 AddGameItemQuantityToInventory(reward, quantity);
+                                
                             }
 
                             break;
@@ -317,7 +326,15 @@ namespace WPF_Test.Models
                 }
             }
         }
+
+        public void HolyGrail()
+        {
+            var holyGrail = new GameItemQuantity(GameData.GameItemByID(303), 1);
+            AddGameItemQuantityToInventory(holyGrail, 1);
+        }
         #endregion
+
+
 
 
         #region BattleMethods

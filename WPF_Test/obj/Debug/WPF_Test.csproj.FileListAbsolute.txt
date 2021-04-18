@@ -19,3 +19,5 @@ C:\Users\dougs\source\repos\WPF_Test\WPF_Test\bin\Debug\PresentationLayer\Resour
 C:\Users\dougs\source\repos\WPF_Test\WPF_Test\obj\Debug\WPF_Test.csprojAssemblyReference.cache
 C:\Users\dougs\source\repos\WPF_Test\WPF_Test\obj\Debug\PresentationLayer\QuestStatusView.g.cs
 C:\Users\dougs\source\repos\WPF_Test\WPF_Test\obj\Debug\PresentationLayer\QuestStatusView.baml
+C:\Users\dougs\source\repos\WPF_Test\WPF_Test\obj\Debug\PresentationLayer\HelpWindow.g.cs
+C:\Users\dougs\source\repos\WPF_Test\WPF_Test\obj\Debug\PresentationLayer\HelpWindow.baml

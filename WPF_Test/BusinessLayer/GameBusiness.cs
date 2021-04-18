@@ -40,13 +40,16 @@ namespace WPF_Test.BusinessLayer
                 _player.SkillLevel = 5;
                 _player.Inventory = new ObservableCollection<GameItemQuantity>()
                 {
-                    new GameItemQuantity(GameData.GameItemByID(101), 1)
+                    new GameItemQuantity(GameData.GameItemByID(101), 1),
+                    new GameItemQuantity(GameData.GameItemByID(102), 1),
+                    new GameItemQuantity(GameData.GameItemByID(103), 1)
                 };
                 _player.Quests = new ObservableCollection<Quest>()
                 {
                     GameData.QuestById(1),
                     GameData.QuestById(2),
-                    GameData.QuestById(3)
+                    GameData.QuestById(3),
+                    GameData.QuestById(4)
                 };
             }
             else
@@ -54,6 +57,8 @@ namespace WPF_Test.BusinessLayer
                 InitializeDataSet();
             }
         }
+
+       
         private void InitializeDataSet()
         {
             _player = GameData.PlayerData();

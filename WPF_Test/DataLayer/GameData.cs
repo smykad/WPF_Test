@@ -17,8 +17,8 @@ namespace WPF_Test.DataLayer
                 Id = 1,
                 Name = "Fred",
                 Age = 34,
-                JobTitle = Player.JobTitleName.Warrior,
-                Race = Character.RaceType.Human,
+                JobTitle = Player.JobTitleName.Patsy,
+                Race = Character.RaceType.Blue,
                 Health = 100,
                 Lives = 3,
                 ExperiencePoints = 10,
@@ -32,7 +32,8 @@ namespace WPF_Test.DataLayer
                 {
                     QuestById(1),
                     QuestById(2),
-                    QuestById(3)
+                    QuestById(3),
+                    QuestById(4)
                 }
             };
         }
@@ -98,11 +99,11 @@ namespace WPF_Test.DataLayer
             {
                 // First Room
                 Id = 1,
-                Name = "1-1",
-                Description = "The entrance",
+                Name = "Medieval England",
+                Description = "It sure rains a lot here...",
                 Accessible = true,
                 ModifiyExperiencePoints = 10,
-                Message = "You find yourself in the entrance of a dungeon",
+                Message = "You find yourself in Medieval England on a quest for the Holy Grail, you stumble across two coconuts",
                 GameItems = new ObservableCollection<GameItemQuantity>
                 {
                     new GameItemQuantity(GameItemByID(101), 2)
@@ -115,12 +116,12 @@ namespace WPF_Test.DataLayer
             {
                 // Second Room
                 Id = 2,
-                Name = "1-2",
-                Description = "The 2nd room in the dungeon where you will encounter an enemy NPC",
+                Name = "Castle",
+                Description = "A French Castle",
                 Accessible = true,
                 ModifiyExperiencePoints = 10,
-                Message = "You encounter an enemy minion (Room 2)",
-                Npcs = new ObservableCollection<Npc> { GetNpcById(9003)}
+                Message = "You find yoursself in front of a castle and upon the ramparts is a vile guard with a pointy helmet...",
+                Npcs = new ObservableCollection<Npc> { GetNpcById(9002)}
             };
             // ***********************
             // *  Floor I: Room III  *
@@ -129,12 +130,12 @@ namespace WPF_Test.DataLayer
             {
                 // Third Room
                 Id = 3,
-                Name = "1-3",
-                Description = "You will have another encounter here",
+                Name = "'Bridge'",
+                Description = "It's really just a plank of wood over a small stream, you could probably just step over it...",
                 Accessible = true,
                 ModifiyExperiencePoints = 10,
-                Message = "This is the third room (Room 3)",
-                Npcs = new ObservableCollection<Npc> { GetNpcById(9002)}
+                Message = "You encounter the Black Knight, guarding a pla.. bridge",
+                Npcs = new ObservableCollection<Npc> { GetNpcById(9003)}
             };
 
             //
@@ -148,11 +149,11 @@ namespace WPF_Test.DataLayer
             {
                 
                 Id = 4,
-                Name = "2-1",
-                Description = "This is a mini boss",
+                Name = "Woods",
+                Description = "These woods are dangerous...",
                 Accessible = false,
                 RequiredRelicId = 301,
-                Message = "Welcome to the mini boss (room 6)",
+                Message = "You walk into the a dangerous forest and encounter the Knights who say.... 'Ni'!",
                 Npcs = new ObservableCollection<Npc> { GetNpcById(9004) }
             };
             // ***********************
@@ -161,10 +162,10 @@ namespace WPF_Test.DataLayer
             gameMap.MapLocations[1, 1] = new Location()
             {
                 Id = 5,
-                Name = "2-2",
-                Description = "This is a vendor room before the mini boss",
+                Name ="Dirt Road",
+                Description = "A dirt road outside a small village",
                 Accessible = true,
-                Message = "Welcome to the Vendor Room (room 5)",
+                Message = "You encounter a peasant named Roger, he looks like he might be a shrubber",
                 Npcs = new ObservableCollection<Npc> { GetNpcById(8001)}
             };
             // ***********************
@@ -173,10 +174,14 @@ namespace WPF_Test.DataLayer
             gameMap.MapLocations[1, 2] = new Location()
             {
                 Id = 6,
-                Name = "2-3",
-                Description = "You will pick up a treasure item of your choice here",
+                Name = "Coconut Road",
+                Description = "A road with coconuts on the ground",
                 Accessible = true,
-                Message = "Welcome to the treasure room (room 4)"
+                Message = "You come upon several coconuts laying on the ground, they must have been carried here by sparrows... but what kind? African or European?",
+                GameItems = new ObservableCollection<GameItemQuantity>
+                {
+                    new GameItemQuantity(GameItemByID(102), 2)
+                }
             };
 
             //
@@ -189,11 +194,11 @@ namespace WPF_Test.DataLayer
             gameMap.MapLocations[0, 0] = new Location()
             {
                 Id = 7,
-                Name = "3-1",
-                Description = "You encounter an NPC",
+                Name = "Camp",
+                Description = "A makeshift camp where Brother Maynard is staying",
                 Accessible = false,
                 RequiredRelicId = 301,
-                Message = "Welcome to the final boss (room 7)",
+                Message = "You come upon a camp and encounter Brother Maynard... Should probably talk to him",
                 Npcs = new ObservableCollection<Npc> { GetNpcById(8002)}
 
             };
@@ -203,11 +208,15 @@ namespace WPF_Test.DataLayer
             gameMap.MapLocations[0, 1] = new Location()
             {
                 Id = 8,
-                Name = "3-2",
-                Description = "Safe room before final boss, health restored to full",
+                Name = "Hill",
+                Description = "Just past this hill is the cave of Carbannog",
                 Accessible = false,
                 RequiredRelicId = 302,
-                Message = "Beware, the final boss is to the east (room 8)"
+                Message = "As you approcach the hill you see a sign that reads 'Beware!'\nYou notice some coconuts laying on the ground",
+                GameItems = new ObservableCollection<GameItemQuantity>
+                {
+                    new GameItemQuantity(GameItemByID(103), 2)
+                }
             };
             // ***********************
             // * Floor III: Room III *
@@ -215,11 +224,11 @@ namespace WPF_Test.DataLayer
             gameMap.MapLocations[0, 2] = new Location()
             {
                 Id = 9,
-                Name = "3-3",
-                Description = "Final Boss Room",
+                Name = "Cave of Caerbannog",
+                Description = "Look at the fangs on that monster!",
                 RequiredRelicId = 302,
                 Accessible = false,
-                Message = "Welcome to the Boss (room 9)",
+                Message = "You bravely walk into the cave of the killer rabbit, Holy Hand Grenade of Antioch in hand",
                 Npcs = new ObservableCollection<Npc> { GetNpcById(9001) }
             };
 
@@ -233,15 +242,15 @@ namespace WPF_Test.DataLayer
         {
             return new List<GameItem>()
             {
-                new Potion(101, "Health Potion", 100, 50, 50, 0, "restores 50 HP", "You restored 50 HP"),
-                new Potion(103, "Bonus Life Potion", 150, 0, 0, 1, "grants 1 life", "You gained a life!"),
-                new Potion(104, "XP Potion", 100, 0, 0, 100, "grants 100 xp", "You gained 100 xp"),
+                new Potion(101, "Healing Coconut", 50, 5, 50, 0, 0, "Grants 50 Health", "You restored 50 HP by banging two coconuts together!"),
+                new Potion(102, "Skill Coconut", 50, 5, 0, 0, 1, "Grants 1 skill level", "You gained a skill level by banging two coconuts together!"),
+                new Potion(103, "Life Coconut", 50, 5, 0, 1, 0, "Grants 1 life", "You gained a life by banging two coconuts together!"),
 
                 new Relic(301, "Shrubbery", 0, 100, "is not too expensive","This shrubbery looks nice!", Relic.UseActionType.OPENLOCATION ),
                 new Relic(302, "Holy Hand Grenade of Antioch", 0, 100, "is a grenade consecrated by Saint Atilla", "You can now engage the Killer Rabbit of Caerbannog", Relic.UseActionType.OPENLOCATION),
+                new Relic(303, "Holy Grail", 500, 500, "IT'S THE HOLY GRAIL!!!", "Congratulations you have completed the Ultimate Quest!", Relic.UseActionType.KILLRABBIT),
 
-                new Money(401, "Gold Coin", 0, 25, "A shiny gold coin", "You throw a gold coin to your Shrubber", Money.MoneyType.GOLD),
-                new Money(402, "Gold Coin", 0, 25, "A shiny silver coin", "You throw a silver coin to your Shrubber", Money.MoneyType.SILVER)
+                new Money(401, "Gold Coin", 0, 25, "A shiny gold coin", "You throw a gold coin to your Shrubber", Money.MoneyType.GOLD)
 
             };
         }
@@ -269,7 +278,7 @@ namespace WPF_Test.DataLayer
                 { 
                     Id = 9002,
                     Name = "The Taunter",
-                    Race = Character.RaceType.Human,
+                    Race = Character.RaceType.Blue,
                     Description = "Speaks in an outrageous French Accent",
                     Messages = new List<string>()
                     {
@@ -282,7 +291,7 @@ namespace WPF_Test.DataLayer
                 {
                     Id = 9003,
                     Name = "The Black Knight",
-                    Race = Character.RaceType.Human,
+                    Race = Character.RaceType.Red,
                     Description = "Will never be defeated, even if you cut all his limbs off... ",
                     Messages = new List<string>()
                     { 
@@ -296,7 +305,7 @@ namespace WPF_Test.DataLayer
                 {
                     Id = 9004,
                     Name = "Knights of Ni",
-                    Race = Character.RaceType.Human,
+                    Race = Character.RaceType.Yellow,
                     Description = "Cannot stand 'it'",
                     Messages = new List<string>()
                     {
@@ -309,7 +318,7 @@ namespace WPF_Test.DataLayer
                 {
                     Id = 8001,
                     Name = "Roger",
-                    Race = Character.RaceType.Human,
+                    Race = Character.RaceType.Blue,
                     Description = "The Shrubber",
                     Messages = new List<string>()
                     {
@@ -326,7 +335,7 @@ namespace WPF_Test.DataLayer
                 {
                     Id = 8002,
                     Name = "Brother Maynard",
-                    Race = Character.RaceType.Human,
+                    Race = Character.RaceType.Yellow,
                     Description = "Keeper of the Holy Hand Grenade of Antioch",
                     Messages = new List<string>()
                     {
@@ -354,7 +363,7 @@ namespace WPF_Test.DataLayer
                 {
                     Id = 1,
                     GoldToGive = 100,
-                    Name = "The knighs of Ni",
+                    Name = "The Knighs of Ni",
                     Description = "Talk to these Npcs in order to obtain gold for a shrubbery.",
 
                     Status = Quest.QuestStatus.Incomplete,
@@ -417,14 +426,15 @@ namespace WPF_Test.DataLayer
 
                     Name = "Quest for the Holy Grail",
 
-                    Description = "Find the relics required to face the final boss",
+                    Description = "Find the relics required to face the final boss, then defeat him!",
 
                     Status = Quest.QuestStatus.Incomplete,
 
                     RequiredGameItemQuantities = new List<GameItemQuantity>()
                     {
                         new GameItemQuantity(GameItemByID(301), 1),
-                        new GameItemQuantity(GameItemByID(302), 1)
+                        new GameItemQuantity(GameItemByID(302), 1),
+                        new GameItemQuantity(GameItemByID(303), 1)
                     }
                 }
 

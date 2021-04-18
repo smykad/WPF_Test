@@ -65,6 +65,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PresentationLayer\HelpWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PresentationLayer\PlayerSetupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -101,6 +105,9 @@
       <DependentUpon>GameSessionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="PresentationLayer\GameSessionViewModel.cs" />
+    <Compile Include="PresentationLayer\HelpWindow.xaml.cs">
+      <DependentUpon>HelpWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PresentationLayer\PlayerSetupView.xaml.cs">
       <DependentUpon>PlayerSetupView.xaml</DependentUpon>
     </Compile>

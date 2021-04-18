@@ -6,6 +6,9 @@ using System.Windows;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using System.Collections.ObjectModel;
+using WPF_Test.DataLayer;
+using WPF_Test.BusinessLayer;
 
 namespace WPF_Test.PresentationLayer
 {
@@ -147,6 +150,8 @@ namespace WPF_Test.PresentationLayer
         public bool HasSouthLocation { get { return SouthLocation != null; } }
         public bool HasWestLocation { get { return WestLocation != null; } }
 
+        public bool HasItems { get; set; }
+
         #endregion 
 
         #endregion
@@ -168,6 +173,7 @@ namespace WPF_Test.PresentationLayer
             _gameMap = gameMap;
             _gameMap.CurrentLocationCoordinates = currentLocationCoordinates;
             _currentLocation = _gameMap.CurrentLocation;
+            CurrentMessage = _player.DefaultGreeting();
             InitializeView();
             BackgroundMusic();
             GameTimer();
@@ -176,6 +182,7 @@ namespace WPF_Test.PresentationLayer
         #endregion
 
         #region METHODS
+
 
         #region Music
         /// <summary>
@@ -236,6 +243,7 @@ namespace WPF_Test.PresentationLayer
                 {
                     NorthLocation = nextNorthLocation;
                 }
+
             }
 
             //
@@ -322,8 +330,10 @@ namespace WPF_Test.PresentationLayer
                 //
                 // display a new message if available
                 //
+                
                 OnPropertyChanged(nameof(MessageDisplay));
             }
+            CurrentMessage = "";         
             OnPropertyChanged(nameof(MessageDisplay));
         }
         #region MOVEMENT
@@ -547,6 +557,10 @@ namespace WPF_Test.PresentationLayer
                     CurrentMessage = relic.UseMessage;
                     UpdateAvailableTravelPoints();
                     break;
+                case Relic.UseActionType.KILLRABBIT:
+                    CurrentMessage = relic.UseMessage;
+                    OnPlayerDies($"{_player.Name} you have slain the killer rabbit and obtained the holy grail", "Victory");
+                    break;
                 default:
                     break;
             }
@@ -557,6 +571,8 @@ namespace WPF_Test.PresentationLayer
             CurrentMessage = potion.UseMessage;
             Player.ExperiencePoints += potion.XpGain;
             Player.Health += potion.HealthChange;
+            Player.SkillLevel += potion.SkillChange;
+            Player.Lives += potion.LivesChange;
             Player.RemoveGameItemQuantityFromInventory(CurrentGameItem);
             Player.Wealth -= potion.Value;
         }
@@ -629,6 +645,12 @@ namespace WPF_Test.PresentationLayer
                 if (playerHitPoints >= battleNpcHitPoints)
                 {
                     battleInformation += $"You have slain {_currentNpc.Name}.";
+                    if(_currentNpc.Id == 9001)
+                    {
+                        battleInformation += $"\nCongratulations {_player.Name} you have found the Holy Grail!";
+                        _player.HolyGrail();
+                        _player.UpdateQuestStatus();
+                    }
                     _currentLocation.Npcs.Remove(_currentNpc);
                 }
                 else
@@ -639,7 +661,7 @@ namespace WPF_Test.PresentationLayer
 
                 CurrentMessage = battleInformation;
                 _player.Health = playerHitPoints;
-                if (_player.Lives <= 0) OnPlayerDies("You have been slain and have no lives left.");
+                if (_player.Lives <= 0) OnPlayerDies("You have been slain and have no lives left.", "Death");
 
             }
             else
@@ -716,17 +738,24 @@ namespace WPF_Test.PresentationLayer
 
         public void ResetPlayer()
         {
-            InitializeView();
+            System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+            Application.Current.Shutdown();
+        }
+
+        public void Help()
+        {
+            var helpWindow = new HelpWindow();
+            helpWindow.ShowDialog();
         }
         #endregion
 
         #region PLAYER WIN/LOSE
-        private void OnPlayerDies(string message)
+        private void OnPlayerDies(string message, string titleText)
         {
             var messagetext = message +
                               "\n\nWould you like to play again?";
 
-            var titleText = "Death";
+            
             const MessageBoxButton button = MessageBoxButton.YesNo;
             MessageBoxResult result = MessageBox.Show(messagetext, titleText, button);
 
