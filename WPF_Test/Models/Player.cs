@@ -26,9 +26,9 @@ namespace WPF_Test.Models
         private int _lives;
         private int _health;
         private int _experiencePoints;
-        private int _wealth;
-        
+        private int _wealth;        
         private int _skillLevel;
+
         private BattleModeName _battleMode;
         private JobTitleName _jobTitle;
 
@@ -333,9 +333,6 @@ namespace WPF_Test.Models
             AddGameItemQuantityToInventory(holyGrail, 1);
         }
         #endregion
-
-
-
 
         #region BattleMethods
 

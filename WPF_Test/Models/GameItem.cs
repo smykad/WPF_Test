@@ -16,7 +16,8 @@ namespace WPF_Test.Models
         #endregion
 
         #region Constructors        
-        public GameItem(int id, string name, int xpGain, int value, string description, string useMessage = ".")
+        public GameItem(int id, string name, int xpGain, int value, 
+            string description, string useMessage = ".")
         {
             Id = id;
             Name = name;

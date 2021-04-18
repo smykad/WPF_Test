@@ -52,7 +52,6 @@ namespace WPF_Test.DataLayer
         }
 
         #region GameMap
-
         public static GameItem GameItemByID(int id)
         {
             return StandardGameItems().FirstOrDefault(i => i.Id == id);
@@ -65,7 +64,6 @@ namespace WPF_Test.DataLayer
         {
             return Quests().FirstOrDefault(q => q.Id == id);
         }
-
         public static Location LocationById(int id)
         {
             List<Location> locations = new List<Location>();
@@ -88,10 +86,6 @@ namespace WPF_Test.DataLayer
             Map gameMap = new Map(rows, columns);
 
             gameMap.StandardGameItems = StandardGameItems();
-            //
-            // row 1
-            //
-
             // ***********************
             // *  Floor I: Room I    *
             // ***********************
@@ -103,7 +97,8 @@ namespace WPF_Test.DataLayer
                 Description = "It sure rains a lot here...",
                 Accessible = true,
                 ModifiyExperiencePoints = 10,
-                Message = "You find yourself in Medieval England on a quest for the Holy Grail, you stumble across two coconuts",
+                Message = "You find yourself in Medieval England on a quest for " +
+                          "the Holy Grail, you stumble across two coconuts",
                 GameItems = new ObservableCollection<GameItemQuantity>
                 {
                     new GameItemQuantity(GameItemByID(101), 2)
@@ -137,11 +132,6 @@ namespace WPF_Test.DataLayer
                 Message = "You encounter the Black Knight, guarding a pla.. bridge",
                 Npcs = new ObservableCollection<Npc> { GetNpcById(9003)}
             };
-
-            //
-            // Row 2
-            //
-
             // ***********************
             // *  Floor II: Room III   *
             // ***********************
@@ -183,11 +173,6 @@ namespace WPF_Test.DataLayer
                     new GameItemQuantity(GameItemByID(102), 2)
                 }
             };
-
-            //
-            // row 3
-            //
-
             // ***********************
             // *  Floor III: Room I  *
             // ***********************
@@ -354,7 +339,6 @@ namespace WPF_Test.DataLayer
         #endregion
 
         #region QUESTS
-
         public static List<Quest> Quests()
         {
             return new List<Quest>()

@@ -142,6 +142,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="PresentationLayer\Resources\backgroundps.png" />
     <Resource Include="PresentationLayer\Resources\background.png" />
     <Content Include="PresentationLayer\Resources\background.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

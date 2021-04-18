@@ -41,7 +41,6 @@ namespace WPF_Test.Models
 
         #endregion
 
-
         #region CONSTRUCTORS
 
         public Map(int rows, int columns)
@@ -52,7 +51,6 @@ namespace WPF_Test.Models
         }
 
         #endregion
-
 
         #region METHODS
 

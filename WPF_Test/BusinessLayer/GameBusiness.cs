@@ -21,7 +21,6 @@ namespace WPF_Test.BusinessLayer
         public GameBusiness()
         {
             SetupPlayer();
-            //InitializeDataSet();
             InstantiateAndShowView();
         }
         private void SetupPlayer()
@@ -30,10 +29,6 @@ namespace WPF_Test.BusinessLayer
             {
                 _playerSetupView = new PlayerSetupView(_player);
                 _playerSetupView.ShowDialog();
-
-                //
-                // setup up game based player properties
-                //
                 _player.ExperiencePoints = 0;
                 _player.Health = 100;
                 _player.Lives = 3;
@@ -65,9 +60,7 @@ namespace WPF_Test.BusinessLayer
         }
         private void InstantiateAndShowView()
         {
-            //
-            // instantiate the view model and initialize the data set
-            //
+            
             _gameSessionViewModel = new GameSessionViewModel(
                 _player,
                 GameData.GameMap(),
@@ -78,10 +71,7 @@ namespace WPF_Test.BusinessLayer
             gameSessionView.DataContext = _gameSessionViewModel;
 
             gameSessionView.Show();
-
-            //
-            // dialog window is initially hidden to mitigate issue with
-            // main window closing after dialog window closes
+                        
             _playerSetupView.Close();
         }
     }

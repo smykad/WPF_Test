@@ -640,11 +640,13 @@ namespace WPF_Test.PresentationLayer
                 battleNpcHitPoints = CalculateNpcHitPoints(battleNpc);
 
                 battleInformation +=
-                    $"Player: {_player.BattleMode}     Hit Points: {playerHitPoints}" + Environment.NewLine +
-                    $"NPC: {battleNpc.BattleMode}     Hit Points: {battleNpcHitPoints}" + Environment.NewLine;
+                    $"{_player.Name} uses {_player.BattleMode}" + Environment.NewLine +
+                    $"{_currentNpc.Name} responds with {battleNpc.BattleMode}" + Environment.NewLine;
                 if (playerHitPoints >= battleNpcHitPoints)
                 {
-                    battleInformation += $"You have slain {_currentNpc.Name}.";
+                    
+                    battleInformation += 
+                        $"You have slain {_currentNpc.Name}.";
                     if(_currentNpc.Id == 9001)
                     {
                         battleInformation += $"\nCongratulations {_player.Name} you have found the Holy Grail!";
