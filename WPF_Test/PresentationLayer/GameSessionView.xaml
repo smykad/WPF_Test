@@ -399,12 +399,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 
-                <StackPanel Grid.Column="0">
-                    <Button Content="Quit"
-                            HorizontalAlignment="Left"
-                            Style="{StaticResource MainPanelButtonStyle}"
-                            Click="Button_Click"/>
-                </StackPanel>
+
 
                 <Border Grid.Column="1"
                         Margin="0"
